@@ -1,4 +1,14 @@
 const STORAGE_KEY = "avdelningsassistent-state-v2";
+let storageStatus = "local";
+
+function emitStorageStatus(status) {
+  storageStatus = status;
+  window.dispatchEvent(
+    new CustomEvent("app-storage-status", {
+      detail: { status },
+    }),
+  );
+}
 
 function getLocalState() {
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -46,15 +56,21 @@ function getTodayKey() {
 }
 
 window.appStorage = {
+  getStatus() {
+    return storageStatus;
+  },
+
   async loadState() {
     const localState = getLocalState();
     const client = createSupabaseClient();
 
     if (!client) {
+      emitStorageStatus("local");
       return localState;
     }
 
     try {
+      emitStorageStatus("syncing");
       const { data, error } = await client
         .from("app_state")
         .select("state")
@@ -67,12 +83,15 @@ window.appStorage = {
 
       if (data?.state) {
         setLocalState(data.state);
+        emitStorageStatus("synced");
         return data.state;
       }
 
+      emitStorageStatus("synced");
       return localState;
     } catch (error) {
       console.error("Kunde inte ladda fran Supabase:", error);
+      emitStorageStatus("error");
       return localState;
     }
   },
@@ -82,6 +101,7 @@ window.appStorage = {
     const client = createSupabaseClient();
 
     if (!client) {
+      emitStorageStatus("local");
       return;
     }
 
@@ -99,6 +119,7 @@ window.appStorage = {
     };
 
     try {
+      emitStorageStatus("syncing");
       const [{ error: stateError }, { error: snapshotError }] = await Promise.all([
         client.from("app_state").upsert(payload),
         client
@@ -113,8 +134,11 @@ window.appStorage = {
       if (snapshotError) {
         throw snapshotError;
       }
+
+      emitStorageStatus("synced");
     } catch (error) {
       console.error("Kunde inte spara till Supabase:", error);
+      emitStorageStatus("error");
     }
   },
 };

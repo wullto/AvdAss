@@ -69,6 +69,7 @@ const demoState = {
   draftHistory: [],
   draftLabs: [],
   draftExams: [],
+  syncStatus: "local",
   editingTaskId: null,
   taskFilters: {
     patient: "",
@@ -86,6 +87,7 @@ const initialState = {
   draftHistory: [],
   draftLabs: [],
   draftExams: [],
+  syncStatus: "local",
   editingPatientId: null,
   editingTaskId: null,
   taskFilters: {
@@ -111,6 +113,7 @@ const taskFormPanel = document.querySelector("#task-form-panel");
 const navTabs = Array.from(document.querySelectorAll("[data-view-tab]"));
 const views = Array.from(document.querySelectorAll("[data-view]"));
 const todayDate = document.querySelector("#today-date");
+const syncStatus = document.querySelector("#sync-status");
 const tasksNavCount = document.querySelector("#tasks-nav-count");
 const completedNavCount = document.querySelector("#completed-nav-count");
 const addHistoryButton = document.querySelector("#add-history-button");
@@ -388,6 +391,7 @@ function saveAndRender() {
 
 function render() {
   renderTodayDate();
+  renderSyncStatus();
   renderNavCounts();
   renderNavigation();
   renderPatientForm();
@@ -397,6 +401,23 @@ function render() {
   renderPatients();
   renderTasks();
   renderCompletedTasks();
+}
+
+function renderSyncStatus() {
+  if (!syncStatus) {
+    return;
+  }
+
+  const status = state.syncStatus || "local";
+  const labels = {
+    local: "Lokal lagring",
+    syncing: "Synkar...",
+    synced: "Synkad",
+    error: "Syncfel",
+  };
+
+  syncStatus.textContent = labels[status] || labels.local;
+  syncStatus.className = `sync-status sync-status-${status}`;
 }
 
 function renderNavCounts() {
@@ -998,7 +1019,21 @@ document.addEventListener("click", async (event) => {
   saveAndRender();
 });
 
+window.addEventListener("app-storage-status", (event) => {
+  const nextStatus = event.detail?.status;
+
+  if (!nextStatus) {
+    return;
+  }
+
+  state.syncStatus = nextStatus;
+  renderSyncStatus();
+});
+
 async function initializeApp() {
+  state.syncStatus = window.appStorage?.getStatus
+    ? window.appStorage.getStatus()
+    : "local";
   const loadedState = await (window.appStorage?.loadState
     ? window.appStorage.loadState()
     : Promise.resolve(null));
