@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avdelningsassistent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div class="hero-row">
+          <h1>Avdelningsassistent</h1>
+          <p id="today-date" class="today-date"></p>
+        </div>
+      </header>
+
+      <nav class="top-nav" aria-label="Huvudnavigation">
+        <button class="nav-tab active" data-view-tab="patients" type="button">Mina patienter</button>
+        <button class="nav-tab" data-view-tab="tasks" type="button">
+          Dagens uppgifter <span id="tasks-nav-count"></span>
+        </button>
+        <button class="nav-tab" data-view-tab="completed" type="button">
+          Avklarade idag <span id="completed-nav-count"></span>
+        </button>
+        <button id="seed-demo" class="ghost-button nav-action" type="button">Ladda exempeldag</button>
+      </nav>
+
+      <main>
+        <section class="view active" data-view="patients">
+          <section class="card">
+            <div class="section-header">
+              <div>
+                <p class="section-kicker">Patienter</p>
+              </div>
+              <button id="toggle-patient-form" class="primary-button primary-button-small" type="button">
+                Ny patient
+              </button>
+            </div>
+
+            <div id="patient-form-panel" class="collapsible" hidden>
+              <form id="patient-form" class="stack-form">
+                <div class="form-header">
+                  <p id="patient-form-title" class="form-title">Ny patient</p>
+                  <button id="cancel-edit-button" class="chip-button" type="button" hidden>Avbryt redigering</button>
+                </div>
+                <label>
+                  Alias / rum
+                  <input name="name" placeholder="t.ex. Sal 3A / Anna K." required />
+                </label>
+                <label>
+                  Ankomstdatum
+                  <input name="arrivalDate" type="date" />
+                </label>
+                <label>
+                  S
+                  <input name="reason" placeholder="t.ex. STEMI" required />
+                </label>
+                <label>
+                  B
+                  <div class="inline-form">
+                    <input
+                      id="history-input"
+                      name="history-input"
+                      placeholder="t.ex. hypertoni"
+                      type="text"
+                    />
+                    <button id="add-history-button" class="ghost-button" type="button">Lagg till</button>
+                  </div>
+                </label>
+                <div id="history-list-preview" class="bullet-list empty-inline">Inga bakgrundssjukdomar tillagda an.</div>
+                <label>
+                  Labbprov
+                  <div class="inline-form">
+                    <input
+                      id="lab-input"
+                      name="lab-input"
+                      placeholder="t.ex. Troponin 3200"
+                      type="text"
+                    />
+                    <button id="add-lab-button" class="ghost-button" type="button">Lagg till</button>
+                  </div>
+                </label>
+                <div id="lab-list-preview" class="bullet-list empty-inline">Inga labb tillagda an.</div>
+                <label>
+                  Undersokning / svar
+                  <div class="inline-form">
+                    <input
+                      id="exam-input"
+                      name="exam-input"
+                      placeholder="t.ex. EKO: EF 35 %"
+                      type="text"
+                    />
+                    <button id="add-exam-button" class="ghost-button" type="button">Lagg till</button>
+                  </div>
+                </label>
+                <div id="exam-list-preview" class="bullet-list empty-inline">Inga undersokningar tillagda an.</div>
+                <label>
+                  A
+                  <textarea
+                    name="status"
+                    rows="2"
+                    placeholder="t.ex. vatska pa lungorna, men andas lugnt i vila"
+                    required
+                  ></textarea>
+                </label>
+                <label>
+                  Senaste NEWS-poang
+                  <input name="news" type="number" min="0" max="20" placeholder="t.ex. 3" />
+                </label>
+                <button id="save-patient-button" type="submit" class="primary-button">Spara patient</button>
+              </form>
+            </div>
+            <div id="patient-list" class="list"></div>
+          </section>
+        </section>
+
+        <section class="view" data-view="tasks">
+          <section class="card">
+            <div class="section-header">
+              <div>
+                <p class="section-kicker">Att gora</p>
+              </div>
+              <button id="toggle-task-form" class="primary-button primary-button-small" type="button">
+                Lagg till uppgift
+              </button>
+            </div>
+
+            <div id="task-form-panel" class="collapsible" hidden>
+              <form id="task-form" class="stack-form">
+                <div class="form-header">
+                  <p id="task-form-title" class="form-title">Ny uppgift</p>
+                  <button id="cancel-task-edit-button" class="chip-button" type="button" hidden>Avbryt redigering</button>
+                </div>
+                <label>
+                  Uppgift
+                  <input
+                    name="title"
+                    placeholder="t.ex. ring konsult om antikoagulation"
+                    required
+                  />
+                </label>
+                <label>
+                  Koppla till patientalias
+                  <input name="patient" list="patient-options" placeholder="valfritt" />
+                </label>
+                <datalist id="patient-options"></datalist>
+                <button type="submit" class="primary-button">Skapa uppgift</button>
+              </form>
+            </div>
+
+            <div class="filter-row">
+              <label>
+                Patient
+                <select id="task-filter-patient">
+                  <option value="">Alla patienter</option>
+                </select>
+              </label>
+            </div>
+
+            <div id="task-list" class="list"></div>
+          </section>
+        </section>
+
+        <section class="view" data-view="completed">
+          <section class="card">
+            <div class="section-header">
+              <div>
+                <p class="section-kicker">Klart</p>
+              </div>
+            </div>
+
+            <div id="completed-task-list" class="list"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.config.js"></script>
+    <script src="storage.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
