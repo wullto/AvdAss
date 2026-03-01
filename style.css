@@ -535,6 +535,26 @@ textarea {
   margin: 0;
 }
 
+.patient-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.patient-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #f3f5f8;
+  border: 1px solid #e1e6eb;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
 .item-title {
   color: var(--ink);
   font-size: 1.35rem;
@@ -646,6 +666,13 @@ textarea {
 
   .item-actions .chip-button {
     flex: 1 1 100%;
+  }
+
+  .patient-avatar {
+    flex-basis: 40px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.35rem;
   }
 
   .template-output {

@@ -3,6 +3,7 @@ const demoState = {
     {
       id: crypto.randomUUID(),
       name: "Sal 3A / Lars",
+      avatar: "🙂",
       arrivalDate: "2026-02-27",
       reason: "STEMI",
       history: ["Hypertoni", "Tidigare NSTEMI"],
@@ -23,6 +24,7 @@ const demoState = {
     {
       id: crypto.randomUUID(),
       name: "Sal 7B / Britta",
+      avatar: "🤒",
       arrivalDate: "2026-02-28",
       reason: "Hjartsviktsexacerbation",
       history: ["FFL", "CKD 3", "Diabetes typ 2"],
@@ -175,6 +177,7 @@ patientForm.addEventListener("submit", (event) => {
 
   const patientPayload = {
     name: String(formData.get("name")).trim(),
+    avatar: String(formData.get("avatar")).trim() || "🙂",
     arrivalDate: String(formData.get("arrivalDate")).trim(),
     reason: String(formData.get("reason")).trim(),
     history: [...state.draftHistory],
@@ -326,6 +329,7 @@ function normalizeState(parsed) {
     patients: Array.isArray(parsed.patients)
       ? parsed.patients.map((patient) => ({
           ...patient,
+          avatar: patient.avatar || "🙂",
           history: Array.isArray(patient.history)
             ? patient.history
             : patient.history
@@ -579,6 +583,7 @@ function startEditingPatient(patientId) {
   state.draftExams = [...patient.exams];
 
   patientForm.elements.name.value = patient.name;
+  patientForm.elements.avatar.value = patient.avatar || "🙂";
   patientForm.elements.arrivalDate.value = patient.arrivalDate || "";
   patientForm.elements.reason.value = patient.reason;
   patientForm.elements.status.value = patient.status;
@@ -673,7 +678,10 @@ function renderPatients() {
       <div class="item-meta">
         <span class="pill ${patientTaskCount > 0 ? "pill-alert" : ""}">${patientTaskCount} oppna uppgifter</span>
       </div>
-      <h3 class="item-title">${patient.name}</h3>
+      <div class="patient-heading">
+        <span class="patient-avatar" aria-hidden="true">${patient.avatar || "🙂"}</span>
+        <h3 class="item-title">${patient.name}</h3>
+      </div>
       <div class="detail-section summary-section compact-summary">
         <p class="item-copy"><strong>S:</strong> ${patient.reason || "Ej ifyllt"}</p>
       </div>
@@ -809,7 +817,7 @@ function renderCompletedTasks() {
 
 function buildPatientSummary(patient, taskLines) {
   return [
-    `${patient.name}`,
+    `${patient.avatar || "🙂"} ${patient.name}`,
     `Ankomstdatum: ${formatDate(patient.arrivalDate)}`,
     `S: ${patient.reason || "-"}`,
     `B: ${patient.history.length > 0 ? patient.history.join(", ") : "-"}`,
