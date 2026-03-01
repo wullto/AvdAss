@@ -61,6 +61,7 @@ const demoState = {
   ],
   selectedPatientId: null,
   currentView: "patients",
+  isNavOpen: false,
   isPatientFormOpen: false,
   isTaskFormOpen: false,
   draftHistory: [],
@@ -77,6 +78,7 @@ const initialState = {
   tasks: [],
   selectedPatientId: null,
   currentView: "patients",
+  isNavOpen: false,
   isPatientFormOpen: false,
   isTaskFormOpen: false,
   draftHistory: [],
@@ -100,6 +102,8 @@ const seedDemoButton = document.querySelector("#seed-demo");
 const patientOptions = document.querySelector("#patient-options");
 const togglePatientFormButton = document.querySelector("#toggle-patient-form");
 const patientFormPanel = document.querySelector("#patient-form-panel");
+const topNav = document.querySelector("#top-nav");
+const toggleNavButton = document.querySelector("#toggle-nav-button");
 const toggleTaskFormButton = document.querySelector("#toggle-task-form");
 const taskFormPanel = document.querySelector("#task-form-panel");
 const navTabs = Array.from(document.querySelectorAll("[data-view-tab]"));
@@ -265,6 +269,11 @@ togglePatientFormButton.addEventListener("click", () => {
   render();
 });
 
+toggleNavButton.addEventListener("click", () => {
+  state.isNavOpen = !state.isNavOpen;
+  render();
+});
+
 toggleTaskFormButton.addEventListener("click", () => {
   state.isTaskFormOpen = !state.isTaskFormOpen;
   if (!state.isTaskFormOpen) {
@@ -286,6 +295,7 @@ cancelTaskEditButton.addEventListener("click", () => {
 navTabs.forEach((tab) => {
   tab.addEventListener("click", () => {
     state.currentView = tab.dataset.viewTab;
+    state.isNavOpen = false;
     saveAndRender();
   });
 });
@@ -403,6 +413,9 @@ function renderTodayDate() {
 }
 
 function renderNavigation() {
+  topNav.classList.toggle("nav-open", state.isNavOpen);
+  toggleNavButton.textContent = state.isNavOpen ? "Stang" : "Meny";
+
   navTabs.forEach((tab) => {
     tab.classList.toggle("active", tab.dataset.viewTab === state.currentView);
   });

@@ -17,11 +17,16 @@
       <header class="hero">
         <div class="hero-row">
           <h1>Avdelningsassistent</h1>
-          <p id="today-date" class="today-date"></p>
+          <div class="hero-actions">
+            <p id="today-date" class="today-date"></p>
+            <button id="toggle-nav-button" class="chip-button menu-toggle" type="button">
+              Meny
+            </button>
+          </div>
         </div>
       </header>
 
-      <nav class="top-nav" aria-label="Huvudnavigation">
+      <nav id="top-nav" class="top-nav" aria-label="Huvudnavigation">
         <button class="nav-tab active" data-view-tab="patients" type="button">Mina patienter</button>
         <button class="nav-tab" data-view-tab="tasks" type="button">
           Dagens uppgifter <span id="tasks-nav-count"></span>
