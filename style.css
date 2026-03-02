@@ -355,6 +355,14 @@ textarea {
   border-top: 1px solid var(--line);
 }
 
+.detail-section-inline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+}
+
 .detail-section-no-border {
   border-top: none;
 }
@@ -597,6 +605,10 @@ textarea {
 .item-copy {
   color: var(--ink);
   line-height: 1.5;
+}
+
+.item-copy-secondary {
+  color: var(--muted);
 }
 
 .item-copy strong {

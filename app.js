@@ -96,6 +96,7 @@ const initialState = {
 };
 
 let state = structuredClone(initialState);
+let pendingScrollTarget = null;
 
 const patientForm = document.querySelector("#patient-form");
 const taskForm = document.querySelector("#task-form");
@@ -271,6 +272,8 @@ togglePatientFormButton.addEventListener("click", () => {
   state.isPatientFormOpen = !state.isPatientFormOpen;
   if (!state.isPatientFormOpen) {
     resetPatientFormState();
+  } else {
+    pendingScrollTarget = "patient";
   }
   render();
 });
@@ -284,6 +287,8 @@ toggleTaskFormButton.addEventListener("click", () => {
   state.isTaskFormOpen = !state.isTaskFormOpen;
   if (!state.isTaskFormOpen) {
     resetTaskFormState();
+  } else {
+    pendingScrollTarget = "task";
   }
   render();
 });
@@ -401,6 +406,33 @@ function render() {
   renderPatients();
   renderTasks();
   renderCompletedTasks();
+  flushPendingScroll();
+}
+
+function flushPendingScroll() {
+  if (!pendingScrollTarget) {
+    return;
+  }
+
+  const targetPanel =
+    pendingScrollTarget === "patient" ? patientFormPanel : taskFormPanel;
+  const targetInput =
+    pendingScrollTarget === "patient" ? patientForm.elements.name : taskTitleInput;
+
+  pendingScrollTarget = null;
+
+  if (!targetPanel || targetPanel.hidden) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    targetPanel.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    targetInput?.focus();
+  });
 }
 
 function renderSyncStatus() {
@@ -602,6 +634,7 @@ function startEditingPatient(patientId) {
   state.draftHistory = [...patient.history];
   state.draftLabs = [...patient.labs];
   state.draftExams = [...patient.exams];
+  pendingScrollTarget = "patient";
 
   patientForm.elements.name.value = patient.name;
   patientForm.elements.avatar.value = patient.avatar || "🧑";
@@ -621,6 +654,7 @@ function startEditingTask(taskId) {
   state.currentView = "tasks";
   state.isTaskFormOpen = true;
   state.editingTaskId = task.id;
+  pendingScrollTarget = "task";
   taskTitleInput.value = task.title;
   taskPatientInput.value = task.patient;
 }
@@ -629,6 +663,7 @@ function openTaskFormForPatient(patientName) {
   state.currentView = "tasks";
   state.isTaskFormOpen = true;
   state.editingTaskId = null;
+  pendingScrollTarget = "task";
   taskForm.reset();
   taskPatientInput.value = patientName;
 }
@@ -707,8 +742,11 @@ function renderPatients() {
         <p class="item-copy"><strong>S:</strong> ${patient.reason || "Ej ifyllt"}</p>
       </div>
       <div class="detail-grid ${isOpen ? "expanded" : "collapsed"}">
-        <div class="detail-section">
-          <p class="item-copy"><strong>Ankomstdatum:</strong> ${formatDate(patient.arrivalDate)}</p>
+        <div class="detail-section detail-section-inline detail-section-no-border">
+          <p class="item-copy"><strong>S:</strong> ${patient.reason || "Ej ifyllt"}</p>
+          <p class="item-copy item-copy-secondary">
+            <strong>Ankomstdatum:</strong> ${formatDate(patient.arrivalDate)}
+          </p>
         </div>
         <div class="detail-section">
           <p class="item-copy"><strong>B:</strong></p>
