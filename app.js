@@ -70,6 +70,7 @@ const demoState = {
   draftLabs: [],
   draftExams: [],
   syncStatus: "local",
+  selectedTaskId: null,
   editingTaskId: null,
   taskFilters: {
     patient: "",
@@ -89,6 +90,7 @@ const initialState = {
   draftExams: [],
   collapsedSections: {},
   syncStatus: "local",
+  selectedTaskId: null,
   editingPatientId: null,
   editingTaskId: null,
   inlineStatusPatientId: null,
@@ -844,6 +846,25 @@ function markTaskHighlight(taskId) {
   }, 1400);
 }
 
+function movePatient(patientId, direction) {
+  const currentIndex = state.patients.findIndex((patient) => patient.id === patientId);
+
+  if (currentIndex === -1) {
+    return;
+  }
+
+  const targetIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
+
+  if (targetIndex < 0 || targetIndex >= state.patients.length) {
+    return;
+  }
+
+  const nextPatients = [...state.patients];
+  const [movedPatient] = nextPatients.splice(currentIndex, 1);
+  nextPatients.splice(targetIndex, 0, movedPatient);
+  state.patients = nextPatients;
+}
+
 function renderPatientOptions() {
   patientOptions.innerHTML = "";
 
@@ -864,6 +885,7 @@ function renderPatients() {
   }
 
   state.patients.forEach((patient) => {
+    const patientIndex = state.patients.findIndex((entry) => entry.id === patient.id);
     const patientOpenTasks = state.tasks.filter(
       (task) => task.patient === patient.name && !task.done,
     );
@@ -956,6 +978,24 @@ function renderPatients() {
         ${renderSectionBlock(patient.id, "R", "tasks", tasksMarkup)}
       </div>
       <div class="item-actions detail-actions ${isOpen ? "" : "hidden-actions"}">
+        <button
+          class="chip-button"
+          data-action="move-patient-up"
+          data-id="${patient.id}"
+          type="button"
+          ${patientIndex === 0 ? "disabled" : ""}
+        >
+          Flytta upp
+        </button>
+        <button
+          class="chip-button"
+          data-action="move-patient-down"
+          data-id="${patient.id}"
+          type="button"
+          ${patientIndex === state.patients.length - 1 ? "disabled" : ""}
+        >
+          Flytta ned
+        </button>
         <button class="chip-button" data-action="new-task-for-patient" data-id="${patient.id}" type="button">Ny uppgift</button>
         <button class="chip-button" data-action="edit-patient" data-id="${patient.id}" type="button">Redigera</button>
         <button class="chip-button" data-action="copy-patient" data-id="${patient.id}" type="button">Kopiera sammanfattning</button>
@@ -1000,27 +1040,31 @@ function renderTasks() {
   orderedTasks.forEach((task) => {
     const linkedPatient = state.patients.find((patient) => patient.name === task.patient);
     const card = document.createElement("article");
+    const isOpen = state.selectedTaskId === task.id;
     card.className = `item-card task-card ${task.done ? "task-card-done" : ""} ${highlightedTaskId === task.id ? "item-card-highlight" : ""}`;
+    card.dataset.taskId = task.id;
     card.innerHTML = `
-      <div class="item-meta">
-        ${task.patient ? `<span class="pill">${task.patient}</span>` : ""}
-        ${task.done ? '<span class="pill">Klar</span>' : ""}
-      </div>
       <div class="task-title-row">
         <h3 class="item-title task-title">${task.title}</h3>
         ${task.done ? '<span class="done-check" aria-label="Avklarad">✓</span>' : ""}
       </div>
-      <div class="item-actions">
-        <button class="chip-button" data-action="toggle-task" data-id="${task.id}" type="button">
-          ${task.done ? "Ateroppna" : "Markera klar"}
-        </button>
-        <button class="chip-button" data-action="edit-task" data-id="${task.id}" type="button">Redigera</button>
-        ${
-          linkedPatient
-            ? `<button class="chip-button" data-action="jump-patient" data-id="${linkedPatient.id}" type="button">Ga till patient</button>`
-            : ""
-        }
-        <button class="chip-button" data-action="delete-task" data-id="${task.id}" type="button">Ta bort</button>
+      <div class="task-details ${isOpen ? "expanded" : "collapsed"}">
+        <div class="item-meta">
+          ${task.patient ? `<span class="pill">${task.patient}</span>` : ""}
+          ${task.done ? '<span class="pill">Klar</span>' : ""}
+        </div>
+        <div class="item-actions">
+          <button class="chip-button" data-action="toggle-task" data-id="${task.id}" type="button">
+            ${task.done ? "Ateroppna" : "Markera klar"}
+          </button>
+          <button class="chip-button" data-action="edit-task" data-id="${task.id}" type="button">Redigera</button>
+          ${
+            linkedPatient
+              ? `<button class="chip-button" data-action="jump-patient" data-id="${linkedPatient.id}" type="button">Ga till patient</button>`
+              : ""
+          }
+          <button class="chip-button" data-action="delete-task" data-id="${task.id}" type="button">Ta bort</button>
+        </div>
       </div>
     `;
     taskList.appendChild(card);
@@ -1042,17 +1086,21 @@ function renderCompletedTasks() {
 
   todaysCompleted.forEach((task) => {
     const card = document.createElement("article");
+    const isOpen = state.selectedTaskId === task.id;
     card.className = `item-card task-card task-card-done ${highlightedTaskId === task.id ? "item-card-highlight" : ""}`;
+    card.dataset.taskId = task.id;
     card.innerHTML = `
-      <div class="item-meta">
-        ${task.patient ? `<span class="pill">${task.patient}</span>` : ""}
-        <span class="pill">Klar</span>
-      </div>
       <div class="task-title-row">
         <h3 class="item-title task-title">${task.title}</h3>
         <span class="done-check" aria-label="Avklarad">✓</span>
       </div>
-      <p class="item-copy">Klarmarkerad: ${formatCompletedAt(task.completedAt)}</p>
+      <div class="task-details ${isOpen ? "expanded" : "collapsed"}">
+        <div class="item-meta">
+          ${task.patient ? `<span class="pill">${task.patient}</span>` : ""}
+          <span class="pill">Klar</span>
+        </div>
+        <p class="item-copy">Klarmarkerad: ${formatCompletedAt(task.completedAt)}</p>
+      </div>
     `;
     completedTaskList.appendChild(card);
   });
@@ -1134,6 +1182,7 @@ document.addEventListener("click", async (event) => {
 
   if (!action || !id) {
     const patientCard = target.closest(".patient-card");
+    const taskCard = target.closest(".task-card");
 
     if (
       patientCard instanceof HTMLElement &&
@@ -1143,6 +1192,12 @@ document.addEventListener("click", async (event) => {
       const patientId = patientCard.dataset.patientId;
       state.selectedPatientId =
         state.selectedPatientId === patientId ? null : patientId;
+      saveAndRender();
+    }
+
+    if (taskCard instanceof HTMLElement && !target.closest("[data-action]")) {
+      const taskId = taskCard.dataset.taskId;
+      state.selectedTaskId = state.selectedTaskId === taskId ? null : taskId;
       saveAndRender();
     }
     return;
@@ -1169,6 +1224,20 @@ document.addEventListener("click", async (event) => {
 
   if (action === "edit-patient") {
     startEditingPatient(id);
+  }
+
+  if (action === "move-patient-up") {
+    movePatient(id, "up");
+    markPatientHighlight(id);
+    saveAndRender();
+    return;
+  }
+
+  if (action === "move-patient-down") {
+    movePatient(id, "down");
+    markPatientHighlight(id);
+    saveAndRender();
+    return;
   }
 
   if (action === "edit-inline-status") {

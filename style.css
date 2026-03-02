@@ -224,6 +224,12 @@ h3 {
   transform: translateY(-1px);
 }
 
+button:disabled {
+  opacity: 0.48;
+  cursor: default;
+  transform: none;
+}
+
 .view {
   display: none;
   animation: rise 240ms ease;
@@ -573,6 +579,15 @@ textarea {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
+}
+
+.task-details.expanded {
+  display: grid;
+  gap: 10px;
+}
+
+.task-details.collapsed {
+  display: none;
 }
 
 .task-card-done .task-title {
