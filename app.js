@@ -87,9 +87,12 @@ const initialState = {
   draftHistory: [],
   draftLabs: [],
   draftExams: [],
+  collapsedSections: {},
   syncStatus: "local",
   editingPatientId: null,
   editingTaskId: null,
+  inlineStatusPatientId: null,
+  inlineStatusDraft: "",
   taskFilters: {
     patient: "",
   },
@@ -97,7 +100,11 @@ const initialState = {
 
 let state = structuredClone(initialState);
 let pendingScrollTarget = null;
+let pendingInlineStatusFocus = false;
+let highlightedPatientId = null;
+let highlightedTaskId = null;
 
+const appShell = document.querySelector(".app-shell");
 const patientForm = document.querySelector("#patient-form");
 const taskForm = document.querySelector("#task-form");
 const patientList = document.querySelector("#patient-list");
@@ -135,6 +142,7 @@ const taskFormTitle = document.querySelector("#task-form-title");
 const cancelTaskEditButton = document.querySelector("#cancel-task-edit-button");
 const saveTaskButton = taskForm.querySelector('button[type="submit"]');
 const taskFilterPatient = document.querySelector("#task-filter-patient");
+const floatingActionButton = document.querySelector("#floating-action-button");
 
 addHistoryButton.addEventListener("click", () => {
   addDraftHistory();
@@ -160,6 +168,15 @@ labInput.addEventListener("keydown", (event) => {
 
   event.preventDefault();
   addDraftLab();
+});
+
+document.querySelectorAll("[data-lab-template]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const template = button.dataset.labTemplate || "";
+    labInput.value = template;
+    labInput.focus();
+    labInput.setSelectionRange(template.length, template.length);
+  });
 });
 
 addExamButton.addEventListener("click", () => {
@@ -229,6 +246,7 @@ patientForm.addEventListener("submit", (event) => {
   state.editingPatientId = null;
 
   patientForm.reset();
+  markPatientHighlight(state.selectedPatientId);
   saveAndRender();
 });
 
@@ -248,6 +266,7 @@ taskForm.addEventListener("submit", (event) => {
           }
         : task,
     );
+    markTaskHighlight(state.editingTaskId);
     resetTaskFormState();
     saveAndRender();
     return;
@@ -261,6 +280,7 @@ taskForm.addEventListener("submit", (event) => {
     completedAt: null,
     createdAt: new Date().toISOString(),
   });
+  markTaskHighlight(state.tasks[0].id);
 
   taskForm.reset();
   taskPatientInput.value = submittedPatient;
@@ -290,6 +310,22 @@ toggleTaskFormButton.addEventListener("click", () => {
   } else {
     pendingScrollTarget = "task";
   }
+  render();
+});
+
+floatingActionButton?.addEventListener("click", () => {
+  if (state.currentView === "patients") {
+    state.isPatientFormOpen = true;
+    state.editingPatientId = null;
+    pendingScrollTarget = "patient";
+  }
+
+  if (state.currentView === "tasks") {
+    state.isTaskFormOpen = true;
+    state.editingTaskId = null;
+    pendingScrollTarget = "task";
+  }
+
   render();
 });
 
@@ -380,6 +416,7 @@ function normalizeState(parsed) {
           createdAt: task.createdAt ?? null,
         }))
       : [],
+    collapsedSections: parsed.collapsedSections ?? {},
   };
 }
 
@@ -399,6 +436,8 @@ function render() {
   renderSyncStatus();
   renderNavCounts();
   renderNavigation();
+  renderViewFocus();
+  renderFloatingActionButton();
   renderPatientForm();
   renderTaskForm();
   renderPatientOptions();
@@ -407,6 +446,42 @@ function render() {
   renderTasks();
   renderCompletedTasks();
   flushPendingScroll();
+  flushPendingInlineStatusFocus();
+}
+
+function renderViewFocus() {
+  const hasPatientFocus = state.currentView === "patients" && state.isPatientFormOpen;
+  const hasTaskFocus = state.currentView === "tasks" && state.isTaskFormOpen;
+
+  appShell?.classList.toggle("patient-form-focus", hasPatientFocus);
+  appShell?.classList.toggle("task-form-focus", hasTaskFocus);
+}
+
+function renderFloatingActionButton() {
+  if (!floatingActionButton) {
+    return;
+  }
+
+  const hidden = state.currentView === "completed";
+  floatingActionButton.hidden = hidden;
+
+  if (hidden) {
+    return;
+  }
+
+  floatingActionButton.textContent =
+    state.currentView === "patients" ? "Ny patient" : "Ny uppgift";
+}
+
+function flushPendingInlineStatusFocus() {
+  if (!pendingInlineStatusFocus) {
+    return;
+  }
+
+  pendingInlineStatusFocus = false;
+  requestAnimationFrame(() => {
+    document.querySelector("[data-inline-status-input]")?.focus();
+  });
 }
 
 function flushPendingScroll() {
@@ -609,6 +684,8 @@ function addDraftExam() {
 function resetPatientFormState() {
   state.isPatientFormOpen = false;
   state.editingPatientId = null;
+  state.inlineStatusPatientId = null;
+  state.inlineStatusDraft = "";
   state.draftHistory = [];
   state.draftLabs = [];
   state.draftExams = [];
@@ -634,6 +711,8 @@ function startEditingPatient(patientId) {
   state.draftHistory = [...patient.history];
   state.draftLabs = [...patient.labs];
   state.draftExams = [...patient.exams];
+  state.inlineStatusPatientId = null;
+  state.inlineStatusDraft = "";
   pendingScrollTarget = "patient";
 
   patientForm.elements.name.value = patient.name;
@@ -668,6 +747,103 @@ function openTaskFormForPatient(patientName) {
   taskPatientInput.value = patientName;
 }
 
+function startInlineStatusEdit(patientId) {
+  const patient = state.patients.find((entry) => entry.id === patientId);
+
+  if (!patient) {
+    return;
+  }
+
+  state.inlineStatusPatientId = patientId;
+  state.inlineStatusDraft = patient.status || "";
+  pendingInlineStatusFocus = true;
+}
+
+function saveInlineStatus(patientId) {
+  const nextStatus = state.inlineStatusDraft.trim();
+
+  state.patients = state.patients.map((patient) =>
+    patient.id === patientId
+      ? {
+          ...patient,
+          status: nextStatus,
+          timestamps: {
+            ...patient.timestamps,
+            status: new Date().toISOString(),
+          },
+        }
+      : patient,
+  );
+
+  state.inlineStatusPatientId = null;
+  state.inlineStatusDraft = "";
+  markPatientHighlight(patientId);
+  saveAndRender();
+}
+
+function togglePatientSection(patientId, section) {
+  const patientSections = state.collapsedSections[patientId] ?? {};
+  state.collapsedSections = {
+    ...state.collapsedSections,
+    [patientId]: {
+      ...patientSections,
+      [section]: !patientSections[section],
+    },
+  };
+}
+
+function isSectionCollapsed(patientId, section) {
+  return Boolean(state.collapsedSections[patientId]?.[section]);
+}
+
+function renderSectionBlock(patientId, label, section, content) {
+  const collapsed = isSectionCollapsed(patientId, section);
+
+  return `
+    <div class="detail-section">
+      <div class="detail-heading-row">
+        <p class="item-copy detail-heading"><strong>${label}:</strong></p>
+        <button
+          class="chip-button section-toggle-button"
+          data-action="toggle-patient-section"
+          data-id="${patientId}"
+          data-section="${section}"
+          type="button"
+        >
+          ${collapsed ? "Visa" : "Dolj"}
+        </button>
+      </div>
+      <div class="${collapsed ? "detail-section-collapsed" : "detail-section-content"}">
+        ${collapsed ? '<p class="item-copy item-copy-secondary">Doljd sektion</p>' : content}
+      </div>
+    </div>
+  `;
+}
+
+function markPatientHighlight(patientId) {
+  highlightedPatientId = patientId;
+  renderPatients();
+  setTimeout(() => {
+    if (highlightedPatientId === patientId) {
+      highlightedPatientId = null;
+      renderPatients();
+    }
+  }, 1400);
+}
+
+function markTaskHighlight(taskId) {
+  highlightedTaskId = taskId;
+  renderTasks();
+  renderCompletedTasks();
+  setTimeout(() => {
+    if (highlightedTaskId === taskId) {
+      highlightedTaskId = null;
+      renderTasks();
+      renderCompletedTasks();
+    }
+  }, 1400);
+}
+
 function renderPatientOptions() {
   patientOptions.innerHTML = "";
 
@@ -683,7 +859,7 @@ function renderPatients() {
 
   if (state.patients.length === 0) {
     patientList.innerHTML =
-      '<article class="template-output empty-state">Inga patienter tillagda an. Tryck pa "Ny patient" for att skapa din forsta.</article>';
+      '<article class="template-output empty-state">Inga patienter an. Skapa en ny patient och bygg upp dagen steg for steg.</article>';
     return;
   }
 
@@ -728,7 +904,19 @@ function renderPatients() {
         : patientTasks.length === 1
           ? patientTasks[0].title
           : `${patientTasks.length} uppgifter`;
-    card.className = `item-card patient-card ${isOpen ? "active" : ""}`;
+    const isEditingStatus = state.inlineStatusPatientId === patient.id;
+    const statusMarkup = isEditingStatus
+      ? `
+        <div class="inline-status-editor" data-stop-card-toggle="true">
+          <textarea id="inline-status-input" data-inline-status-input="true" rows="3" placeholder="Skriv aktuellt A...">${state.inlineStatusDraft}</textarea>
+          <div class="item-actions inline-status-actions">
+            <button class="chip-button" data-action="save-inline-status" data-id="${patient.id}" type="button">Spara A</button>
+            <button class="chip-button" data-action="cancel-inline-status" data-id="${patient.id}" type="button">Avbryt</button>
+          </div>
+        </div>
+      `
+      : `<p class="item-copy item-copy-a"><strong>A:</strong> ${patient.status || "Ej ifyllt"}</p>`;
+    card.className = `item-card patient-card ${isOpen ? "active" : ""} ${highlightedPatientId === patient.id ? "item-card-highlight" : ""}`;
     card.dataset.patientId = patient.id;
     card.innerHTML = `
       <div class="item-meta">
@@ -748,28 +936,24 @@ function renderPatients() {
             <strong>Ankomstdatum:</strong> ${formatDate(patient.arrivalDate)}
           </p>
         </div>
-        <div class="detail-section">
-          <p class="item-copy"><strong>B:</strong></p>
-          ${historyMarkup}
-        </div>
-        <div class="detail-section">
-          <p class="item-copy"><strong>Labb:</strong></p>
-          ${labsMarkup}
-        </div>
-        <div class="detail-section">
-          <p class="item-copy"><strong>Undersokningar:</strong></p>
-          ${examsMarkup}
-        </div>
+        ${renderSectionBlock(patient.id, "B", "history", historyMarkup)}
+        ${renderSectionBlock(patient.id, "Labb", "labs", labsMarkup)}
+        ${renderSectionBlock(patient.id, "Undersokningar", "exams", examsMarkup)}
         <div class="detail-section detail-section-no-border">
           <p class="item-copy"><strong>NEWS:</strong> ${patient.news || "Ej ifyllt"}</p>
         </div>
         <div class="detail-section detail-section-a">
-          <p class="item-copy item-copy-a"><strong>A:</strong> ${patient.status || "Ej ifyllt"}</p>
+          <div class="detail-heading-row">
+            <p class="item-copy detail-heading"><strong>A:</strong></p>
+            ${
+              isEditingStatus
+                ? ""
+                : `<button class="chip-button section-toggle-button" data-action="edit-inline-status" data-id="${patient.id}" type="button">Redigera A</button>`
+            }
+          </div>
+          ${statusMarkup}
         </div>
-        <div class="detail-section">
-          <p class="item-copy"><strong>R:</strong></p>
-          ${tasksMarkup}
-        </div>
+        ${renderSectionBlock(patient.id, "R", "tasks", tasksMarkup)}
       </div>
       <div class="item-actions detail-actions ${isOpen ? "" : "hidden-actions"}">
         <button class="chip-button" data-action="new-task-for-patient" data-id="${patient.id}" type="button">Ny uppgift</button>
@@ -787,7 +971,7 @@ function renderTasks() {
 
   if (state.tasks.length === 0) {
     taskList.innerHTML =
-      '<article class="template-output empty-state">Inga uppgifter an. Lagg till dagens att-gora for dina patienter.</article>';
+      '<article class="template-output empty-state">Inga oppna uppgifter just nu. Lagg till en uppgift nar nagot dyker upp.</article>';
     return;
   }
 
@@ -816,7 +1000,7 @@ function renderTasks() {
   orderedTasks.forEach((task) => {
     const linkedPatient = state.patients.find((patient) => patient.name === task.patient);
     const card = document.createElement("article");
-    card.className = `item-card task-card ${task.done ? "task-card-done" : ""}`;
+    card.className = `item-card task-card ${task.done ? "task-card-done" : ""} ${highlightedTaskId === task.id ? "item-card-highlight" : ""}`;
     card.innerHTML = `
       <div class="item-meta">
         ${task.patient ? `<span class="pill">${task.patient}</span>` : ""}
@@ -852,13 +1036,13 @@ function renderCompletedTasks() {
 
   if (todaysCompleted.length === 0) {
     completedTaskList.innerHTML =
-      '<article class="template-output empty-state">Inga uppgifter ar klarmarkerade idag.</article>';
+      '<article class="template-output empty-state">Inget ar klarmarkerat an idag.</article>';
     return;
   }
 
   todaysCompleted.forEach((task) => {
     const card = document.createElement("article");
-    card.className = "item-card task-card task-card-done";
+    card.className = `item-card task-card task-card-done ${highlightedTaskId === task.id ? "item-card-highlight" : ""}`;
     card.innerHTML = `
       <div class="item-meta">
         ${task.patient ? `<span class="pill">${task.patient}</span>` : ""}
@@ -951,7 +1135,11 @@ document.addEventListener("click", async (event) => {
   if (!action || !id) {
     const patientCard = target.closest(".patient-card");
 
-    if (patientCard instanceof HTMLElement && !target.closest("[data-action]")) {
+    if (
+      patientCard instanceof HTMLElement &&
+      !target.closest("[data-action]") &&
+      !target.closest("[data-stop-card-toggle]")
+    ) {
       const patientId = patientCard.dataset.patientId;
       state.selectedPatientId =
         state.selectedPatientId === patientId ? null : patientId;
@@ -983,6 +1171,20 @@ document.addEventListener("click", async (event) => {
     startEditingPatient(id);
   }
 
+  if (action === "edit-inline-status") {
+    startInlineStatusEdit(id);
+  }
+
+  if (action === "save-inline-status") {
+    saveInlineStatus(id);
+    return;
+  }
+
+  if (action === "cancel-inline-status") {
+    state.inlineStatusPatientId = null;
+    state.inlineStatusDraft = "";
+  }
+
   if (action === "new-task-for-patient") {
     const patient = state.patients.find((entry) => entry.id === id);
     if (patient) {
@@ -1007,15 +1209,43 @@ document.addEventListener("click", async (event) => {
   }
 
   if (action === "toggle-task") {
-    state.tasks = state.tasks.map((task) =>
-      task.id === id
+    const task = state.tasks.find((entry) => entry.id === id);
+    const taskCard = target.closest(".task-card");
+
+    if (task && !task.done && taskCard instanceof HTMLElement) {
+      taskCard.classList.add("task-card-completing");
+      setTimeout(() => {
+        state.tasks = state.tasks.map((entry) =>
+          entry.id === id
+            ? {
+                ...entry,
+                done: true,
+                completedAt: new Date().toISOString(),
+              }
+            : entry,
+        );
+        markTaskHighlight(id);
+        saveAndRender();
+      }, 180);
+      return;
+    }
+
+    state.tasks = state.tasks.map((entry) =>
+      entry.id === id
         ? {
-            ...task,
-            done: !task.done,
-            completedAt: !task.done ? new Date().toISOString() : null,
+            ...entry,
+            done: !entry.done,
+            completedAt: entry.done ? null : new Date().toISOString(),
           }
-        : task,
+        : entry,
     );
+  }
+
+  if (action === "toggle-patient-section") {
+    const section = target.dataset.section;
+    if (section) {
+      togglePatientSection(id, section);
+    }
   }
 
   if (action === "remove-draft-lab") {
@@ -1038,7 +1268,7 @@ document.addEventListener("click", async (event) => {
       const taskLines =
         patientTasks.length > 0
           ? patientTasks
-              .map((task) => `- [${task.done ? "x" : " "}] ${task.title} (${task.category})`)
+              .map((task) => `- [${task.done ? "x" : " "}] ${task.title}`)
               .join("\n")
           : "- Inga kopplade uppgifter";
       const copyText = buildPatientSummary(patient, taskLines);
@@ -1055,6 +1285,37 @@ document.addEventListener("click", async (event) => {
   }
 
   saveAndRender();
+});
+
+document.addEventListener("input", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  if (target.matches("[data-inline-status-input]")) {
+    state.inlineStatusDraft = target.value;
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  if (
+    target.matches("[data-inline-status-input]") &&
+    event.key === "Enter" &&
+    (event.metaKey || event.ctrlKey)
+  ) {
+    event.preventDefault();
+    if (state.inlineStatusPatientId) {
+      saveInlineStatus(state.inlineStatusPatientId);
+    }
+  }
 });
 
 window.addEventListener("app-storage-status", (event) => {

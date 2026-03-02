@@ -116,6 +116,14 @@
                     <button id="add-lab-button" class="ghost-button" type="button">Lagg till</button>
                   </div>
                 </label>
+                <div class="quick-chip-row" aria-label="Vanliga labb">
+                  <button class="chip-button quick-lab-chip" data-lab-template="Hb " type="button">Hb</button>
+                  <button class="chip-button quick-lab-chip" data-lab-template="Krea " type="button">Krea</button>
+                  <button class="chip-button quick-lab-chip" data-lab-template="Na " type="button">Na</button>
+                  <button class="chip-button quick-lab-chip" data-lab-template="K " type="button">K</button>
+                  <button class="chip-button quick-lab-chip" data-lab-template="CRP " type="button">CRP</button>
+                  <button class="chip-button quick-lab-chip" data-lab-template="Troponin " type="button">Troponin</button>
+                </div>
                 <div id="lab-list-preview" class="bullet-list empty-inline">Inga labb tillagda an.</div>
                 <label>
                   Undersokning / svar
@@ -209,6 +217,9 @@
           </section>
         </section>
       </main>
+      <button id="floating-action-button" class="floating-action-button" type="button" aria-label="Snabbval">
+        Ny
+      </button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
