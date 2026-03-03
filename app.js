@@ -3,14 +3,12 @@ const demoState = {
     {
       id: crypto.randomUUID(),
       name: "Sal 3A / Lars",
-      avatar: "👨",
       arrivalDate: "2026-02-27",
       reason: "STEMI",
-      history: ["Hypertoni", "Tidigare NSTEMI"],
-      labs: ["Troponin 3200", "Hb 132", "Krea 94"],
-      exams: ["PCI genomford", "EKG med regredierande ST-hojningar"],
+      history: "Hypertoni, Tidigare NSTEMI",
+      labs: "Troponin 3200, Hb 132, Krea 94",
+      exams: "PCI genomford, EKG med regredierande ST-hojningar",
       status: "Trott men stabil, latt rassel basalt bilateralt",
-      news: "3",
       timestamps: {
         arrivalDate: "2026-03-01T08:00:00.000Z",
         reason: "2026-03-01T08:00:00.000Z",
@@ -18,20 +16,17 @@ const demoState = {
         labs: "2026-03-01T08:00:00.000Z",
         exams: "2026-03-01T08:00:00.000Z",
         status: "2026-03-01T08:00:00.000Z",
-        news: "2026-03-01T08:00:00.000Z",
       },
     },
     {
       id: crypto.randomUUID(),
       name: "Sal 7B / Britta",
-      avatar: "👩",
       arrivalDate: "2026-02-28",
       reason: "Hjartsviktsexacerbation",
-      history: ["FFL", "CKD 3", "Diabetes typ 2"],
-      labs: ["NT-proBNP 8200", "Krea 122", "Na 136"],
-      exams: ["Lungrontgen med stasbild", "EKO bestalld"],
+      history: "FFL, CKD 3, Diabetes typ 2",
+      labs: "NT-proBNP 8200, Krea 122, Na 136",
+      exams: "Lungrontgen med stasbild, EKO bestalld",
       status: "Battre andning efter diuretika men fortsatt perifera odem",
-      news: "2",
       timestamps: {
         arrivalDate: "2026-03-01T09:00:00.000Z",
         reason: "2026-03-01T09:00:00.000Z",
@@ -39,7 +34,96 @@ const demoState = {
         labs: "2026-03-01T09:00:00.000Z",
         exams: "2026-03-01T09:00:00.000Z",
         status: "2026-03-01T09:00:00.000Z",
-        news: "2026-03-01T09:00:00.000Z",
+      },
+    },
+    {
+      id: crypto.randomUUID(),
+      name: "Sal 5C / Ingrid",
+      arrivalDate: "2026-03-02",
+      reason: "Pneumoni",
+      history: "KOL, Osteoporos, Tidigare rokare",
+      labs: "CRP 214, LPK 16.2, Sat 91 % pa 2 L",
+      exams: "Lungrontgen med hogerunderlobsinfiltrat, blododling tagen",
+      status: "Hostig, subfebril, nagot andningspaverkad men kontaktbar",
+      timestamps: {
+        arrivalDate: "2026-03-02T07:45:00.000Z",
+        reason: "2026-03-02T07:45:00.000Z",
+        history: "2026-03-02T07:45:00.000Z",
+        labs: "2026-03-02T07:45:00.000Z",
+        exams: "2026-03-02T07:45:00.000Z",
+        status: "2026-03-02T07:45:00.000Z",
+      },
+    },
+    {
+      id: crypto.randomUUID(),
+      name: "Sal 2D / Oskar",
+      arrivalDate: "2026-03-01",
+      reason: "Akut njursvikt",
+      history: "Hypertoni, Hjarstsvikt, Gikt",
+      labs: "Krea 286, K 5.6, Urea 21",
+      exams: "Bladderscan utan retention, ulj njurar bestalld",
+      status: "Mattligt trott, torra slemhinnor, diures oklar senaste dygnet",
+      timestamps: {
+        arrivalDate: "2026-03-01T10:30:00.000Z",
+        reason: "2026-03-01T10:30:00.000Z",
+        history: "2026-03-01T10:30:00.000Z",
+        labs: "2026-03-01T10:30:00.000Z",
+        exams: "2026-03-01T10:30:00.000Z",
+        status: "2026-03-01T10:30:00.000Z",
+      },
+    },
+    {
+      id: crypto.randomUUID(),
+      name: "Sal 8A / Fatima",
+      arrivalDate: "2026-03-03",
+      reason: "GI-blodning",
+      history: "Formaksflimmer, Ulcussjukdom, Jarnbrist",
+      labs: "Hb 84, BT 98/62, Laktat 2.1",
+      exams: "Gastroskopi planerad, BAS-test klart",
+      status: "Blekt men cirkulatoriskt stabil, lite yr vid mobilisering",
+      timestamps: {
+        arrivalDate: "2026-03-03T06:50:00.000Z",
+        reason: "2026-03-03T06:50:00.000Z",
+        history: "2026-03-03T06:50:00.000Z",
+        labs: "2026-03-03T06:50:00.000Z",
+        exams: "2026-03-03T06:50:00.000Z",
+        status: "2026-03-03T06:50:00.000Z",
+      },
+    },
+    {
+      id: crypto.randomUUID(),
+      name: "Sal 1B / Kerstin",
+      arrivalDate: "2026-02-26",
+      reason: "Strokeutredning",
+      history: "Hyperlipidemi, Hypertoni, Tidigare TIA",
+      labs: "LDL 3.8, Hb 129, Krea 78",
+      exams: "DT hjarna utan blasning, karotisduplex bestalld",
+      status: "Neurologiskt oforandrad, latt ordletningssvarigheter kvarstar",
+      timestamps: {
+        arrivalDate: "2026-02-26T11:15:00.000Z",
+        reason: "2026-02-26T11:15:00.000Z",
+        history: "2026-02-26T11:15:00.000Z",
+        labs: "2026-02-26T11:15:00.000Z",
+        exams: "2026-02-26T11:15:00.000Z",
+        status: "2026-02-26T11:15:00.000Z",
+      },
+    },
+    {
+      id: crypto.randomUUID(),
+      name: "Sal 4D / Johan",
+      arrivalDate: "2026-03-03",
+      reason: "Sepsis efter UVI",
+      history: "BPH, Typ 2-diabetes, CKD 3",
+      labs: "CRP 188, LPK 18.4, Krea 146",
+      exams: "Urinodling skickad, blododling skickad, DT buk overvags",
+      status: "Febril, takykard men piggare efter vatska och antibiotika",
+      timestamps: {
+        arrivalDate: "2026-03-03T05:55:00.000Z",
+        reason: "2026-03-03T05:55:00.000Z",
+        history: "2026-03-03T05:55:00.000Z",
+        labs: "2026-03-03T05:55:00.000Z",
+        exams: "2026-03-03T05:55:00.000Z",
+        status: "2026-03-03T05:55:00.000Z",
       },
     },
   ],
@@ -60,15 +144,76 @@ const demoState = {
       completedAt: null,
       createdAt: "2026-03-01T09:10:00.000Z",
     },
+    {
+      id: crypto.randomUUID(),
+      title: "Folj blododlingssvar och stallningstag till byte av antibiotika",
+      patient: "Sal 5C / Ingrid",
+      done: false,
+      completedAt: null,
+      createdAt: "2026-03-03T08:20:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      title: "Kontakta njurjour om fortsatt stigande krea och hyperkalemi",
+      patient: "Sal 2D / Oskar",
+      done: false,
+      completedAt: null,
+      createdAt: "2026-03-03T08:35:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      title: "Skriv blodbestallning och kontrollera om Hb tas om efter lunch",
+      patient: "Sal 8A / Fatima",
+      done: false,
+      completedAt: null,
+      createdAt: "2026-03-03T09:05:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      title: "Folj karotisduplex och planera sekundarprofylax i epikris",
+      patient: "Sal 1B / Kerstin",
+      done: false,
+      completedAt: null,
+      createdAt: "2026-03-03T09:25:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      title: "Kontrollera urinproduktion efter KAD-sattning",
+      patient: "Sal 4D / Johan",
+      done: false,
+      completedAt: null,
+      createdAt: "2026-03-03T09:40:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      title: "Skriv remiss for hjart-eko",
+      patient: "Sal 7B / Britta",
+      done: true,
+      completedAt: "2026-03-03T08:55:00.000Z",
+      createdAt: "2026-03-03T08:05:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      title: "Bestall kontroll-Hb efter lunch",
+      patient: "Sal 8A / Fatima",
+      done: true,
+      completedAt: "2026-03-03T10:15:00.000Z",
+      createdAt: "2026-03-03T07:20:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      title: "Prata med sjukgymnast om mobiliseringsniva",
+      patient: "Sal 3A / Lars",
+      done: true,
+      completedAt: "2026-03-03T11:05:00.000Z",
+      createdAt: "2026-03-03T08:45:00.000Z",
+    },
   ],
   selectedPatientId: null,
   currentView: "patients",
   isNavOpen: false,
   isPatientFormOpen: false,
   isTaskFormOpen: false,
-  draftHistory: [],
-  draftLabs: [],
-  draftExams: [],
   syncStatus: "local",
   selectedTaskId: null,
   editingTaskId: null,
@@ -85,16 +230,15 @@ const initialState = {
   isNavOpen: false,
   isPatientFormOpen: false,
   isTaskFormOpen: false,
-  draftHistory: [],
-  draftLabs: [],
-  draftExams: [],
   collapsedSections: {},
   syncStatus: "local",
   selectedTaskId: null,
   editingPatientId: null,
   editingTaskId: null,
-  inlineStatusPatientId: null,
-  inlineStatusDraft: "",
+  activePatientField: null,
+  patientFieldDraft: "",
+  inlineTaskPatientId: null,
+  inlineTaskDraft: "",
   taskFilters: {
     patient: "",
   },
@@ -102,97 +246,35 @@ const initialState = {
 
 let state = structuredClone(initialState);
 let pendingScrollTarget = null;
-let pendingInlineStatusFocus = false;
+let pendingPatientFieldFocus = false;
+let pendingPatientTaskFocus = false;
 let highlightedPatientId = null;
 let highlightedTaskId = null;
+const patientFieldOrder = ["reason", "history", "labs", "exams", "status"];
 
 const appShell = document.querySelector(".app-shell");
 const patientForm = document.querySelector("#patient-form");
-const taskForm = document.querySelector("#task-form");
 const patientList = document.querySelector("#patient-list");
-const taskList = document.querySelector("#task-list");
 const completedTaskList = document.querySelector("#completed-task-list");
 const seedDemoButton = document.querySelector("#seed-demo");
-const patientOptions = document.querySelector("#patient-options");
+const clearPatientsButton = document.querySelector("#clear-patients");
 const togglePatientFormButton = document.querySelector("#toggle-patient-form");
 const patientFormPanel = document.querySelector("#patient-form-panel");
 const topNav = document.querySelector("#top-nav");
 const toggleNavButton = document.querySelector("#toggle-nav-button");
-const toggleTaskFormButton = document.querySelector("#toggle-task-form");
-const taskFormPanel = document.querySelector("#task-form-panel");
 const navTabs = Array.from(document.querySelectorAll("[data-view-tab]"));
 const views = Array.from(document.querySelectorAll("[data-view]"));
 const todayDate = document.querySelector("#today-date");
 const syncStatus = document.querySelector("#sync-status");
-const tasksNavCount = document.querySelector("#tasks-nav-count");
 const completedNavCount = document.querySelector("#completed-nav-count");
-const addHistoryButton = document.querySelector("#add-history-button");
+const clearCompletedButton = document.querySelector("#clear-completed-button");
 const historyInput = document.querySelector("#history-input");
-const historyListPreview = document.querySelector("#history-list-preview");
-const addLabButton = document.querySelector("#add-lab-button");
 const labInput = document.querySelector("#lab-input");
-const labListPreview = document.querySelector("#lab-list-preview");
-const addExamButton = document.querySelector("#add-exam-button");
 const examInput = document.querySelector("#exam-input");
-const examListPreview = document.querySelector("#exam-list-preview");
 const cancelEditButton = document.querySelector("#cancel-edit-button");
 const patientFormTitle = document.querySelector("#patient-form-title");
 const savePatientButton = document.querySelector("#save-patient-button");
-const taskTitleInput = taskForm.elements.title;
-const taskPatientInput = taskForm.elements.patient;
-const taskFormTitle = document.querySelector("#task-form-title");
-const cancelTaskEditButton = document.querySelector("#cancel-task-edit-button");
-const saveTaskButton = taskForm.querySelector('button[type="submit"]');
-const taskFilterPatient = document.querySelector("#task-filter-patient");
 const floatingActionButton = document.querySelector("#floating-action-button");
-
-addHistoryButton.addEventListener("click", () => {
-  addDraftHistory();
-});
-
-historyInput.addEventListener("keydown", (event) => {
-  if (event.key !== "Enter") {
-    return;
-  }
-
-  event.preventDefault();
-  addDraftHistory();
-});
-
-addLabButton.addEventListener("click", () => {
-  addDraftLab();
-});
-
-labInput.addEventListener("keydown", (event) => {
-  if (event.key !== "Enter") {
-    return;
-  }
-
-  event.preventDefault();
-  addDraftLab();
-});
-
-document.querySelectorAll("[data-lab-template]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const template = button.dataset.labTemplate || "";
-    labInput.value = template;
-    labInput.focus();
-    labInput.setSelectionRange(template.length, template.length);
-  });
-});
-
-addExamButton.addEventListener("click", () => {
-  addDraftExam();
-});
-
-examInput.addEventListener("keydown", (event) => {
-  if (event.key !== "Enter") {
-    return;
-  }
-
-  event.preventDefault();
-  addDraftExam();
-});
 
 patientForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -200,14 +282,12 @@ patientForm.addEventListener("submit", (event) => {
 
   const patientPayload = {
     name: String(formData.get("name")).trim(),
-    avatar: String(formData.get("avatar")).trim() || "🧑",
     arrivalDate: String(formData.get("arrivalDate")).trim(),
     reason: String(formData.get("reason")).trim(),
-    history: [...state.draftHistory],
-    labs: [...state.draftLabs],
-    exams: [...state.draftExams],
+    history: String(formData.get("history")).trim(),
+    labs: String(formData.get("labs")).trim(),
+    exams: String(formData.get("exams")).trim(),
     status: String(formData.get("status")).trim(),
-    news: String(formData.get("news")).trim(),
     timestamps: buildPatientTimestamps(),
   };
 
@@ -242,52 +322,13 @@ patientForm.addEventListener("submit", (event) => {
   }
 
   state.isPatientFormOpen = false;
-  state.draftHistory = [];
-  state.draftLabs = [];
-  state.draftExams = [];
   state.editingPatientId = null;
+  state.activePatientField = null;
+  state.patientFieldDraft = "";
 
   patientForm.reset();
   markPatientHighlight(state.selectedPatientId);
   saveAndRender();
-});
-
-taskForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const formData = new FormData(taskForm);
-  const submittedPatient = String(formData.get("patient")).trim();
-  const submittedTitle = String(formData.get("title")).trim();
-
-  if (state.editingTaskId) {
-    state.tasks = state.tasks.map((task) =>
-      task.id === state.editingTaskId
-        ? {
-            ...task,
-            title: submittedTitle,
-            patient: submittedPatient,
-          }
-        : task,
-    );
-    markTaskHighlight(state.editingTaskId);
-    resetTaskFormState();
-    saveAndRender();
-    return;
-  }
-
-  state.tasks.unshift({
-    id: crypto.randomUUID(),
-    title: submittedTitle,
-    patient: submittedPatient,
-    done: false,
-    completedAt: null,
-    createdAt: new Date().toISOString(),
-  });
-  markTaskHighlight(state.tasks[0].id);
-
-  taskForm.reset();
-  taskPatientInput.value = submittedPatient;
-  saveAndRender();
-  taskTitleInput.focus();
 });
 
 togglePatientFormButton.addEventListener("click", () => {
@@ -295,6 +336,7 @@ togglePatientFormButton.addEventListener("click", () => {
   if (!state.isPatientFormOpen) {
     resetPatientFormState();
   } else {
+    stopEditingPatient();
     pendingScrollTarget = "patient";
   }
   render();
@@ -305,27 +347,11 @@ toggleNavButton.addEventListener("click", () => {
   render();
 });
 
-toggleTaskFormButton.addEventListener("click", () => {
-  state.isTaskFormOpen = !state.isTaskFormOpen;
-  if (!state.isTaskFormOpen) {
-    resetTaskFormState();
-  } else {
-    pendingScrollTarget = "task";
-  }
-  render();
-});
-
 floatingActionButton?.addEventListener("click", () => {
   if (state.currentView === "patients") {
     state.isPatientFormOpen = true;
-    state.editingPatientId = null;
+    stopEditingPatient();
     pendingScrollTarget = "patient";
-  }
-
-  if (state.currentView === "tasks") {
-    state.isTaskFormOpen = true;
-    state.editingTaskId = null;
-    pendingScrollTarget = "task";
   }
 
   render();
@@ -333,11 +359,6 @@ floatingActionButton?.addEventListener("click", () => {
 
 cancelEditButton.addEventListener("click", () => {
   resetPatientFormState();
-  render();
-});
-
-cancelTaskEditButton.addEventListener("click", () => {
-  resetTaskFormState();
   render();
 });
 
@@ -349,18 +370,60 @@ navTabs.forEach((tab) => {
   });
 });
 
-[taskFilterPatient].forEach((filter) => {
-  filter.addEventListener("change", () => {
-    state.taskFilters = {
-      patient: taskFilterPatient.value,
-    };
-    saveAndRender();
-  });
-});
-
 seedDemoButton.addEventListener("click", () => {
   state = normalizeState(structuredClone(demoState));
   state.selectedPatientId = state.patients[0]?.id ?? null;
+  saveAndRender();
+});
+
+clearPatientsButton?.addEventListener("click", () => {
+  const hasData = state.patients.length > 0 || state.tasks.length > 0;
+
+  if (!hasData) {
+    return;
+  }
+
+  const confirmed = window.confirm(
+    "Rensa alla patienter och alla kopplade uppgifter?",
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  state.patients = [];
+  state.tasks = [];
+  state.selectedPatientId = null;
+  state.selectedTaskId = null;
+  state.editingPatientId = null;
+  state.activePatientField = null;
+  state.patientFieldDraft = "";
+  state.inlineTaskPatientId = null;
+  state.inlineTaskDraft = "";
+  state.collapsedSections = {};
+  saveAndRender();
+});
+
+clearCompletedButton?.addEventListener("click", () => {
+  const today = getTodayKey();
+  const hasCompletedToday = state.tasks.some(
+    (task) => task.done && task.completedAt?.startsWith(today),
+  );
+
+  if (!hasCompletedToday) {
+    return;
+  }
+
+  const confirmed = window.confirm("Rensa alla uppgifter som ar avklarade idag?");
+
+  if (!confirmed) {
+    return;
+  }
+
+  state.tasks = state.tasks.filter(
+    (task) => !(task.done && task.completedAt?.startsWith(today)),
+  );
+  state.selectedTaskId = null;
   saveAndRender();
 });
 
@@ -372,34 +435,19 @@ function normalizeState(parsed) {
   return {
     ...structuredClone(initialState),
     ...parsed,
+    currentView: parsed.currentView === "tasks" ? "patients" : (parsed.currentView ?? "patients"),
     patients: Array.isArray(parsed.patients)
       ? parsed.patients.map((patient) => ({
           ...patient,
-          avatar: patient.avatar || "🧑",
           history: Array.isArray(patient.history)
-            ? patient.history
-            : patient.history
-              ? String(patient.history)
-                  .split(",")
-                  .map((entry) => entry.trim())
-                  .filter(Boolean)
-              : [],
+            ? patient.history.join(", ")
+            : String(patient.history || ""),
           labs: Array.isArray(patient.labs)
-            ? patient.labs
-            : patient.labs
-              ? String(patient.labs)
-                  .split(",")
-                  .map((lab) => lab.trim())
-                  .filter(Boolean)
-              : [],
+            ? patient.labs.join(", ")
+            : String(patient.labs || ""),
           exams: Array.isArray(patient.exams)
-            ? patient.exams
-            : patient.exams
-              ? String(patient.exams)
-                  .split(",")
-                  .map((exam) => exam.trim())
-                  .filter(Boolean)
-              : [],
+            ? patient.exams.join(", ")
+            : String(patient.exams || ""),
           timestamps: {
             arrivalDate: patient.timestamps?.arrivalDate ?? null,
             reason: patient.timestamps?.reason ?? null,
@@ -407,7 +455,6 @@ function normalizeState(parsed) {
             labs: patient.timestamps?.labs ?? null,
             exams: patient.timestamps?.exams ?? null,
             status: patient.timestamps?.status ?? null,
-            news: patient.timestamps?.news ?? null,
           },
         }))
       : [],
@@ -441,22 +488,17 @@ function render() {
   renderViewFocus();
   renderFloatingActionButton();
   renderPatientForm();
-  renderTaskForm();
-  renderPatientOptions();
-  renderTaskFilters();
   renderPatients();
-  renderTasks();
   renderCompletedTasks();
   flushPendingScroll();
   flushPendingInlineStatusFocus();
+  flushPendingPatientTaskFocus();
 }
 
 function renderViewFocus() {
   const hasPatientFocus = state.currentView === "patients" && state.isPatientFormOpen;
-  const hasTaskFocus = state.currentView === "tasks" && state.isTaskFormOpen;
 
   appShell?.classList.toggle("patient-form-focus", hasPatientFocus);
-  appShell?.classList.toggle("task-form-focus", hasTaskFocus);
 }
 
 function renderFloatingActionButton() {
@@ -471,18 +513,28 @@ function renderFloatingActionButton() {
     return;
   }
 
-  floatingActionButton.textContent =
-    state.currentView === "patients" ? "Ny patient" : "Ny uppgift";
+  floatingActionButton.textContent = "Ny patient";
 }
 
 function flushPendingInlineStatusFocus() {
-  if (!pendingInlineStatusFocus) {
+  if (!pendingPatientFieldFocus) {
     return;
   }
 
-  pendingInlineStatusFocus = false;
+  pendingPatientFieldFocus = false;
   requestAnimationFrame(() => {
-    document.querySelector("[data-inline-status-input]")?.focus();
+    document.querySelector("[data-inline-patient-input]")?.focus();
+  });
+}
+
+function flushPendingPatientTaskFocus() {
+  if (!pendingPatientTaskFocus) {
+    return;
+  }
+
+  pendingPatientTaskFocus = false;
+  requestAnimationFrame(() => {
+    document.querySelector("[data-inline-task-input]")?.focus();
   });
 }
 
@@ -492,9 +544,8 @@ function flushPendingScroll() {
   }
 
   const targetPanel =
-    pendingScrollTarget === "patient" ? patientFormPanel : taskFormPanel;
-  const targetInput =
-    pendingScrollTarget === "patient" ? patientForm.elements.name : taskTitleInput;
+    pendingScrollTarget === "patient" ? patientFormPanel : null;
+  const targetInput = pendingScrollTarget === "patient" ? patientForm.elements.name : null;
 
   pendingScrollTarget = null;
 
@@ -520,6 +571,7 @@ function renderSyncStatus() {
   const status = state.syncStatus || "local";
   const labels = {
     local: "Lokal lagring",
+    paused: "Sync pausad",
     syncing: "Synkar...",
     synced: "Synkad",
     error: "Syncfel",
@@ -530,10 +582,10 @@ function renderSyncStatus() {
 }
 
 function renderNavCounts() {
-  const openCount = state.tasks.filter((task) => !task.done).length;
   const completedCount = state.tasks.filter((task) => task.done).length;
-  tasksNavCount.textContent = `(${openCount})`;
-  completedNavCount.textContent = `(${completedCount})`;
+  if (completedNavCount) {
+    completedNavCount.textContent = `(${completedCount})`;
+  }
 }
 
 function renderTodayDate() {
@@ -564,140 +616,16 @@ function renderPatientForm() {
   togglePatientFormButton.textContent = state.isPatientFormOpen
     ? "Stang formularet"
     : "Ny patient";
-  patientFormTitle.textContent = state.editingPatientId ? "Redigera patient" : "Ny patient";
-  savePatientButton.textContent = state.editingPatientId ? "Uppdatera patient" : "Spara patient";
-  cancelEditButton.hidden = !state.editingPatientId;
-
-  if (state.draftHistory.length === 0) {
-    historyListPreview.textContent = "Inga bakgrundssjukdomar tillagda an.";
-    historyListPreview.className = "bullet-list empty-inline";
-  } else {
-    historyListPreview.className = "bullet-list";
-    historyListPreview.innerHTML = state.draftHistory
-      .map(
-        (entry, index) => `
-          <div class="bullet-row">
-            <span>${entry}</span>
-            <button class="chip-button" data-action="remove-draft-history" data-id="${index}" type="button">Ta bort</button>
-          </div>
-        `,
-      )
-      .join("");
-  }
-
-  if (state.draftLabs.length === 0) {
-    labListPreview.textContent = "Inga labb tillagda an.";
-    labListPreview.className = "bullet-list empty-inline";
-  } else {
-    labListPreview.className = "bullet-list";
-    labListPreview.innerHTML = state.draftLabs
-      .map(
-        (lab, index) => `
-          <div class="bullet-row">
-            <span>${lab}</span>
-            <button class="chip-button" data-action="remove-draft-lab" data-id="${index}" type="button">Ta bort</button>
-          </div>
-        `,
-      )
-      .join("");
-  }
-
-  if (state.draftExams.length === 0) {
-    examListPreview.textContent = "Inga undersokningar tillagda an.";
-    examListPreview.className = "bullet-list empty-inline";
-    return;
-  }
-
-  examListPreview.className = "bullet-list";
-  examListPreview.innerHTML = state.draftExams
-    .map(
-      (exam, index) => `
-        <div class="bullet-row">
-          <span>${exam}</span>
-          <button class="chip-button" data-action="remove-draft-exam" data-id="${index}" type="button">Ta bort</button>
-        </div>
-      `,
-    )
-    .join("");
-}
-
-function renderTaskForm() {
-  taskFormPanel.hidden = !state.isTaskFormOpen;
-  toggleTaskFormButton.textContent = state.isTaskFormOpen
-    ? "Stang formularet"
-    : "Lagg till uppgift";
-  taskFormTitle.textContent = state.editingTaskId ? "Redigera uppgift" : "Ny uppgift";
-  saveTaskButton.textContent = state.editingTaskId ? "Uppdatera uppgift" : "Skapa uppgift";
-  cancelTaskEditButton.hidden = !state.editingTaskId;
-}
-
-function renderTaskFilters() {
-  taskFilterPatient.innerHTML = '<option value="">Alla patienter</option>';
-  state.patients.forEach((patient) => {
-    const option = document.createElement("option");
-    option.value = patient.name;
-    option.textContent = patient.name;
-    if (patient.name === state.taskFilters.patient) {
-      option.selected = true;
-    }
-    taskFilterPatient.appendChild(option);
-  });
-}
-
-function addDraftHistory() {
-  const value = historyInput.value.trim();
-
-  if (!value) {
-    return;
-  }
-
-  state.draftHistory = [...state.draftHistory, value];
-  historyInput.value = "";
-  renderPatientForm();
-  void persistState();
-}
-
-function addDraftLab() {
-  const value = labInput.value.trim();
-
-  if (!value) {
-    return;
-  }
-
-  state.draftLabs = [...state.draftLabs, value];
-  labInput.value = "";
-  renderPatientForm();
-  void persistState();
-}
-
-function addDraftExam() {
-  const value = examInput.value.trim();
-
-  if (!value) {
-    return;
-  }
-
-  state.draftExams = [...state.draftExams, value];
-  examInput.value = "";
-  renderPatientForm();
-  void persistState();
+  patientFormTitle.textContent = "Ny patient";
+  savePatientButton.textContent = "Spara patient";
+  cancelEditButton.hidden = true;
 }
 
 function resetPatientFormState() {
   state.isPatientFormOpen = false;
-  state.editingPatientId = null;
-  state.inlineStatusPatientId = null;
-  state.inlineStatusDraft = "";
-  state.draftHistory = [];
-  state.draftLabs = [];
-  state.draftExams = [];
+  state.activePatientField = null;
+  state.patientFieldDraft = "";
   patientForm.reset();
-}
-
-function resetTaskFormState() {
-  state.isTaskFormOpen = false;
-  state.editingTaskId = null;
-  taskForm.reset();
 }
 
 function startEditingPatient(patientId) {
@@ -709,78 +637,166 @@ function startEditingPatient(patientId) {
 
   state.editingPatientId = patient.id;
   state.selectedPatientId = patient.id;
-  state.isPatientFormOpen = true;
-  state.draftHistory = [...patient.history];
-  state.draftLabs = [...patient.labs];
-  state.draftExams = [...patient.exams];
-  state.inlineStatusPatientId = null;
-  state.inlineStatusDraft = "";
-  pendingScrollTarget = "patient";
-
-  patientForm.elements.name.value = patient.name;
-  patientForm.elements.avatar.value = patient.avatar || "🧑";
-  patientForm.elements.arrivalDate.value = patient.arrivalDate || "";
-  patientForm.elements.reason.value = patient.reason;
-  patientForm.elements.status.value = patient.status;
-  patientForm.elements.news.value = patient.news;
+  state.activePatientField = null;
+  state.patientFieldDraft = "";
+  state.isPatientFormOpen = false;
 }
 
-function startEditingTask(taskId) {
-  const task = state.tasks.find((entry) => entry.id === taskId);
+function stopEditingPatient() {
+  state.editingPatientId = null;
+  state.activePatientField = null;
+  state.patientFieldDraft = "";
+}
 
-  if (!task) {
+function startInlinePatientTask(patientId) {
+  state.inlineTaskPatientId = patientId;
+  state.inlineTaskDraft = "";
+  pendingPatientTaskFocus = true;
+}
+
+function stopInlinePatientTask() {
+  state.inlineTaskPatientId = null;
+  state.inlineTaskDraft = "";
+}
+
+function saveInlinePatientTask(patientId) {
+  const patient = state.patients.find((entry) => entry.id === patientId);
+  const title = state.inlineTaskDraft.trim();
+
+  if (!patient || !title) {
+    stopInlinePatientTask();
+    render();
     return;
   }
 
-  state.currentView = "tasks";
-  state.isTaskFormOpen = true;
-  state.editingTaskId = task.id;
-  pendingScrollTarget = "task";
-  taskTitleInput.value = task.title;
-  taskPatientInput.value = task.patient;
+  state.tasks.push({
+    id: crypto.randomUUID(),
+    title,
+    patient: patient.name,
+    done: false,
+    completedAt: null,
+    createdAt: new Date().toISOString(),
+  });
+
+  const newTaskId = state.tasks[state.tasks.length - 1].id;
+  stopInlinePatientTask();
+  markTaskHighlight(newTaskId);
+  saveAndRender();
 }
 
-function openTaskFormForPatient(patientName) {
-  state.currentView = "tasks";
-  state.isTaskFormOpen = true;
-  state.editingTaskId = null;
-  pendingScrollTarget = "task";
-  taskForm.reset();
-  taskPatientInput.value = patientName;
-}
-
-function startInlineStatusEdit(patientId) {
+function startPatientFieldEdit(patientId, field) {
   const patient = state.patients.find((entry) => entry.id === patientId);
 
   if (!patient) {
     return;
   }
 
-  state.inlineStatusPatientId = patientId;
-  state.inlineStatusDraft = patient.status || "";
-  pendingInlineStatusFocus = true;
+  state.editingPatientId = patientId;
+  state.activePatientField = field;
+  state.patientFieldDraft = String(patient[field] || "");
+  pendingPatientFieldFocus = true;
 }
 
-function saveInlineStatus(patientId) {
-  const nextStatus = state.inlineStatusDraft.trim();
+function savePatientField(patientId) {
+  if (!state.activePatientField) {
+    return;
+  }
+
+  const field = state.activePatientField;
+  const nextValue = state.patientFieldDraft.trim();
+  const previousPatient = state.patients.find((patient) => patient.id === patientId);
 
   state.patients = state.patients.map((patient) =>
     patient.id === patientId
       ? {
           ...patient,
-          status: nextStatus,
+          [field]: nextValue,
           timestamps: {
             ...patient.timestamps,
-            status: new Date().toISOString(),
+            [field]: new Date().toISOString(),
           },
         }
       : patient,
   );
 
-  state.inlineStatusPatientId = null;
-  state.inlineStatusDraft = "";
+  if (field === "name" && previousPatient && previousPatient.name !== nextValue) {
+    state.tasks = state.tasks.map((task) =>
+      task.patient === previousPatient.name ? { ...task, patient: nextValue } : task,
+    );
+  }
+
+  state.activePatientField = null;
+  state.patientFieldDraft = "";
   markPatientHighlight(patientId);
   saveAndRender();
+}
+
+function savePatientFieldAndAdvance(patientId) {
+  if (!state.activePatientField) {
+    return;
+  }
+
+  const currentField = state.activePatientField;
+  const currentIndex = patientFieldOrder.indexOf(currentField);
+  const nextField =
+    currentIndex >= 0 && currentIndex < patientFieldOrder.length - 1
+      ? patientFieldOrder[currentIndex + 1]
+      : null;
+
+  savePatientField(patientId);
+
+  if (nextField) {
+    startPatientFieldEdit(patientId, nextField);
+    render();
+  } else {
+    stopEditingPatient();
+    render();
+  }
+}
+
+function renderEditablePatientField(patient, field, label, options = {}) {
+  const isEditingField =
+    state.editingPatientId === patient.id && state.activePatientField === field;
+  const value = patient[field] || "";
+  const displayValue =
+    field === "arrivalDate" ? formatDate(value) : value || "Ej ifyllt";
+  const multiline = options.multiline ?? false;
+  const type = options.type || "text";
+  const stopAttr = 'data-stop-card-toggle="true"';
+  const displayClass = options.displayClass || "item-copy";
+  const inlineEditor = options.inlineEditor ?? false;
+
+  if (isEditingField) {
+    const inputMarkup = multiline
+      ? `<textarea ${stopAttr} data-inline-patient-input="true" rows="${options.rows || 2}">${state.patientFieldDraft}</textarea>`
+      : `<input ${stopAttr} data-inline-patient-input="true" type="${type}" value="${state.patientFieldDraft}" />`;
+
+    return `
+      <div class="inline-status-editor ${inlineEditor ? "inline-status-editor-inline" : ""}" ${stopAttr}>
+        ${inputMarkup}
+        <div class="item-actions inline-status-actions">
+          <button class="chip-button" data-action="save-patient-field" data-id="${patient.id}" type="button">Spara</button>
+          <button class="chip-button" data-action="cancel-patient-field" data-id="${patient.id}" type="button">Avbryt</button>
+        </div>
+      </div>
+    `;
+  }
+
+  if (state.editingPatientId === patient.id) {
+    return `
+      <button
+        class="inline-edit-display ${displayClass}"
+        data-action="edit-patient-field"
+        data-id="${patient.id}"
+        data-field="${field}"
+        type="button"
+      >
+        ${label ? `<strong>${label}:</strong> ` : ""}${displayValue}
+      </button>
+    `;
+  }
+
+  return `<p class="${displayClass}">${label ? `<strong>${label}:</strong> ` : ""}${displayValue}</p>`;
 }
 
 function togglePatientSection(patientId, section) {
@@ -854,16 +870,6 @@ function movePatient(patientId, direction) {
   state.patients = nextPatients;
 }
 
-function renderPatientOptions() {
-  patientOptions.innerHTML = "";
-
-  state.patients.forEach((patient) => {
-    const option = document.createElement("option");
-    option.value = patient.name;
-    patientOptions.appendChild(option);
-  });
-}
-
 function renderPatients() {
   patientList.innerHTML = "";
 
@@ -882,33 +888,45 @@ function renderPatients() {
     const patientTasks = patientOpenTasks;
     const card = document.createElement("article");
     const isOpen = patient.id === state.selectedPatientId;
-    const historyMarkup =
-      patient.history.length > 0
-        ? `<div class="tag-list tag-list-history">${patient.history
-            .map((entry) => `<span class="data-tag data-tag-history">${entry}</span>`)
-            .join("")}</div>`
-        : '<p class="item-copy">Ej ifyllt</p>';
-    const labsMarkup =
-      patient.labs.length > 0
-        ? `<div class="tag-list tag-list-labs">${patient.labs
-            .map((lab) => `<span class="data-tag data-tag-lab">${lab}</span>`)
-            .join("")}</div>`
-        : '<p class="item-copy">Ej ifyllt</p>';
-    const examsMarkup =
-      patient.exams.length > 0
-        ? `<ul class="bullet-points">${patient.exams
-            .map((exam) => `<li>${exam}</li>`)
-            .join("")}</ul>`
-        : '<p class="item-copy">Ej ifyllt</p>';
+    const historyMarkup = renderEditablePatientField(patient, "history", "", { multiline: true, rows: 2 });
+    const labsMarkup = renderEditablePatientField(patient, "labs", "", { multiline: true, rows: 2 });
+    const examsMarkup = renderEditablePatientField(patient, "exams", "", { multiline: true, rows: 2 });
+    const hasInlineTask = state.inlineTaskPatientId === patient.id;
     const tasksMarkup =
       patientTasks.length > 0
         ? `<div class="task-chip-list">${patientTasks
             .map(
               (task) =>
-                `<article class="mini-task-card">${task.title}${task.done ? " (klar)" : ""}</article>`,
+                `<article class="mini-task-card">
+                  <span class="mini-task-r">R</span>
+                  <span class="mini-task-text">${task.title}</span>
+                  <button
+                    class="chip-button mini-task-complete-button"
+                    data-action="toggle-task"
+                    data-id="${task.id}"
+                    type="button"
+                  >
+                    Klar
+                  </button>
+                </article>`,
             )
             .join("")}</div>`
-        : '<p class="item-copy">Inga uppgifter kopplade.</p>';
+        : hasInlineTask
+          ? ""
+          : '<p class="item-copy">Inga uppgifter kopplade.</p>';
+    const inlineTaskMarkup =
+      hasInlineTask
+        ? `
+          <article class="mini-task-card mini-task-card-editing" data-stop-card-toggle="true">
+            <input
+              data-inline-task-input="true"
+              type="text"
+              value="${state.inlineTaskDraft}"
+              placeholder="Skriv ny uppgift"
+            />
+          </article>
+        `
+        : "";
     const taskSummary =
       patientTasks.length === 0
         ? "Inga uppgifter"
@@ -916,59 +934,55 @@ function renderPatients() {
           ? patientTasks[0].title
           : `${patientTasks.length} uppgifter`;
     const isEditingPatient = state.editingPatientId === patient.id;
-    const isEditingStatus = state.inlineStatusPatientId === patient.id;
-    const statusMarkup = isEditingStatus
-      ? `
-        <div class="inline-status-editor" data-stop-card-toggle="true">
-          <textarea id="inline-status-input" data-inline-status-input="true" rows="3" placeholder="Skriv aktuellt A...">${state.inlineStatusDraft}</textarea>
-          <div class="item-actions inline-status-actions">
-            <button class="chip-button" data-action="save-inline-status" data-id="${patient.id}" type="button">Spara A</button>
-            <button class="chip-button" data-action="cancel-inline-status" data-id="${patient.id}" type="button">Avbryt</button>
-          </div>
-        </div>
-      `
-      : `<p class="item-copy item-copy-a">${patient.status || "Ej ifyllt"}</p>`;
+    const statusMarkup = renderEditablePatientField(patient, "status", "", {
+      multiline: true,
+      rows: 3,
+    });
     card.className = `item-card patient-card ${isOpen ? "active" : ""} ${highlightedPatientId === patient.id ? "item-card-highlight" : ""}`;
     card.dataset.patientId = patient.id;
     card.innerHTML = `
       <div class="item-meta">
         <span class="pill ${patientTaskCount > 0 ? "pill-alert" : ""}">${patientTaskCount} oppna uppgifter</span>
       </div>
-      <div class="patient-heading">
-        <span class="patient-avatar" aria-hidden="true">${patient.avatar || "🧑"}</span>
-        <h3 class="item-title">${patient.name}</h3>
-      </div>
+      ${
+        isEditingPatient
+          ? renderEditablePatientField(patient, "name", "", { multiline: false })
+              .replace('class="inline-edit-display"', 'class="inline-edit-display inline-edit-title"')
+          : `<h3 class="item-title">${patient.name}</h3>`
+      }
       <div class="detail-section summary-section compact-summary ${isOpen ? "collapsed" : ""}">
         <p class="item-copy"><strong>S:</strong> ${patient.reason || "Ej ifyllt"}</p>
+        <p class="item-copy"><strong>B:</strong> ${patient.history || "Ej ifyllt"}</p>
         <p class="item-copy"><strong>A:</strong> ${patient.status || "Ej ifyllt"}</p>
       </div>
       <div class="detail-grid ${isOpen ? "expanded" : "collapsed"}">
-        <div class="detail-section detail-section-inline detail-section-no-border">
-          <p class="item-copy"><strong>S:</strong> ${patient.reason || "Ej ifyllt"}</p>
-          <p class="item-copy item-copy-secondary">
-            <strong>Ankomstdatum:</strong> ${formatDate(patient.arrivalDate)}
-          </p>
+        <div class="detail-section detail-section-stack detail-section-no-border">
+          ${renderEditablePatientField(patient, "reason", "S")}
+          ${
+            state.editingPatientId === patient.id
+              ? renderEditablePatientField(patient, "arrivalDate", "Ankomstdatum", {
+                  type: "date",
+                  displayClass: "item-copy item-copy-secondary",
+                })
+              : `<p class="item-copy item-copy-secondary"><strong>Ankomstdatum:</strong> ${formatDate(patient.arrivalDate)}</p>`
+          }
         </div>
         ${renderSectionBlock(patient.id, "B", "history", historyMarkup)}
         ${renderSectionBlock(patient.id, "Labb", "labs", labsMarkup)}
         ${renderSectionBlock(patient.id, "Undersokningar", "exams", examsMarkup)}
-        <div class="detail-section detail-section-no-border">
-          <p class="item-copy"><strong>NEWS:</strong> ${patient.news || "Ej ifyllt"}</p>
-        </div>
         <div class="detail-section detail-section-a">
           <div class="detail-heading-row">
             <p class="item-copy detail-heading"><strong>A:</strong></p>
-            ${
-              isEditingStatus
-                ? ""
-                : `<button class="chip-button section-toggle-button" data-action="edit-inline-status" data-id="${patient.id}" type="button">Redigera A</button>`
-            }
           </div>
           ${statusMarkup}
         </div>
-        ${renderSectionBlock(patient.id, "R", "tasks", tasksMarkup)}
+        ${renderSectionBlock(patient.id, "R", "tasks", `${tasksMarkup}${inlineTaskMarkup}`)}
       </div>
       <div class="item-actions detail-actions ${isOpen ? "" : "hidden-actions"}">
+        <button class="chip-button" data-action="edit-patient" data-id="${patient.id}" type="button">
+          ${isEditingPatient ? "Klar" : "Redigera"}
+        </button>
+        <button class="chip-button" data-action="new-task-for-patient" data-id="${patient.id}" type="button">Ny uppgift</button>
         ${
           isEditingPatient
             ? `
@@ -990,13 +1004,11 @@ function renderPatients() {
               >
                 Flytta ned
               </button>
-              <button class="chip-button" data-action="new-task-for-patient" data-id="${patient.id}" type="button">Ny uppgift</button>
               <button class="chip-button" data-action="copy-patient" data-id="${patient.id}" type="button">Kopiera sammanfattning</button>
               <button class="chip-button" data-action="delete-patient" data-id="${patient.id}" type="button">Ta bort</button>
             `
             : ""
         }
-        <button class="chip-button" data-action="edit-patient" data-id="${patient.id}" type="button">Redigera</button>
       </div>
     `;
     patientList.appendChild(card);
@@ -1004,68 +1016,7 @@ function renderPatients() {
 }
 
 function renderTasks() {
-  taskList.innerHTML = "";
-
-  if (state.tasks.length === 0) {
-    taskList.innerHTML =
-      '<article class="template-output empty-state">Inga oppna uppgifter just nu. Lagg till en uppgift nar nagot dyker upp.</article>';
-    return;
-  }
-
-  const filteredTasks = state.tasks.filter(
-    (task) => !task.done && (!state.taskFilters.patient || task.patient === state.taskFilters.patient),
-  );
-
-  if (filteredTasks.length === 0) {
-    taskList.innerHTML =
-      '<article class="template-output empty-state">Inga uppgifter matchar filtren.</article>';
-    return;
-  }
-
-  const orderedTasks = [...filteredTasks].sort((left, right) => {
-    if (left.done !== right.done) {
-      return Number(left.done) - Number(right.done);
-    }
-
-    if (left.done && right.done) {
-      return (right.completedAt || "").localeCompare(left.completedAt || "");
-    }
-
-    return 0;
-  });
-
-  orderedTasks.forEach((task) => {
-    const linkedPatient = state.patients.find((patient) => patient.name === task.patient);
-    const card = document.createElement("article");
-    const isOpen = state.selectedTaskId === task.id;
-    card.className = `item-card task-card ${task.done ? "task-card-done" : ""} ${highlightedTaskId === task.id ? "item-card-highlight" : ""}`;
-    card.dataset.taskId = task.id;
-    card.innerHTML = `
-      <div class="task-title-row">
-        <h3 class="item-title task-title">${task.title}</h3>
-        ${task.done ? '<span class="done-check" aria-label="Avklarad">✓</span>' : ""}
-      </div>
-      <div class="task-details ${isOpen ? "expanded" : "collapsed"}">
-        <div class="item-meta">
-          ${task.patient ? `<span class="pill">${task.patient}</span>` : ""}
-          ${task.done ? '<span class="pill">Klar</span>' : ""}
-        </div>
-        <div class="item-actions">
-          <button class="chip-button" data-action="toggle-task" data-id="${task.id}" type="button">
-            ${task.done ? "Ateroppna" : "Markera klar"}
-          </button>
-          <button class="chip-button" data-action="edit-task" data-id="${task.id}" type="button">Redigera</button>
-          ${
-            linkedPatient
-              ? `<button class="chip-button" data-action="jump-patient" data-id="${linkedPatient.id}" type="button">Ga till patient</button>`
-              : ""
-          }
-          <button class="chip-button" data-action="delete-task" data-id="${task.id}" type="button">Ta bort</button>
-        </div>
-      </div>
-    `;
-    taskList.appendChild(card);
-  });
+  return;
 }
 
 function renderCompletedTasks() {
@@ -1074,6 +1025,10 @@ function renderCompletedTasks() {
   const todaysCompleted = state.tasks
     .filter((task) => task.done && task.completedAt?.startsWith(today))
     .sort((left, right) => (right.completedAt || "").localeCompare(left.completedAt || ""));
+
+  if (clearCompletedButton) {
+    clearCompletedButton.hidden = todaysCompleted.length === 0;
+  }
 
   if (todaysCompleted.length === 0) {
     completedTaskList.innerHTML =
@@ -1088,7 +1043,7 @@ function renderCompletedTasks() {
     card.dataset.taskId = task.id;
     card.innerHTML = `
       <div class="task-title-row">
-        <h3 class="item-title task-title">${task.title}</h3>
+        <h3 class="item-title task-title">${task.patient ? `${task.patient}: ` : ""}${task.title}</h3>
         <span class="done-check" aria-label="Avklarad">✓</span>
       </div>
       <div class="task-details ${isOpen ? "expanded" : "collapsed"}">
@@ -1105,13 +1060,12 @@ function renderCompletedTasks() {
 
 function buildPatientSummary(patient, taskLines) {
   return [
-    `${patient.avatar || "🧑"} ${patient.name}`,
+    `${patient.name}`,
     `Ankomstdatum: ${formatDate(patient.arrivalDate)}`,
     `S: ${patient.reason || "-"}`,
-    `B: ${patient.history.length > 0 ? patient.history.join(", ") : "-"}`,
-    `NEWS: ${patient.news || "-"}`,
-    `Labb: ${patient.labs.length > 0 ? patient.labs.join(", ") : "-"}`,
-    `Undersokningar: ${patient.exams.length > 0 ? patient.exams.join(", ") : "-"}`,
+    `B: ${patient.history || "-"}`,
+    `Labb: ${patient.labs || "-"}`,
+    `Undersokningar: ${patient.exams || "-"}`,
     `A: ${patient.status || "-"}`,
     "",
     "Dagens uppgifter:",
@@ -1129,7 +1083,6 @@ function buildPatientTimestamps() {
     labs: now,
     exams: now,
     status: now,
-    news: now,
   };
 }
 
@@ -1187,8 +1140,15 @@ document.addEventListener("click", async (event) => {
       !target.closest("[data-stop-card-toggle]")
     ) {
       const patientId = patientCard.dataset.patientId;
-      state.selectedPatientId =
+      const nextSelectedPatientId =
         state.selectedPatientId === patientId ? null : patientId;
+
+      if (state.editingPatientId && state.editingPatientId !== nextSelectedPatientId) {
+        stopEditingPatient();
+      }
+
+      state.selectedPatientId =
+        nextSelectedPatientId;
       saveAndRender();
     }
 
@@ -1220,7 +1180,28 @@ document.addEventListener("click", async (event) => {
   }
 
   if (action === "edit-patient") {
-    startEditingPatient(id);
+    if (state.editingPatientId === id) {
+      stopEditingPatient();
+    } else {
+      startEditingPatient(id);
+    }
+  }
+
+  if (action === "edit-patient-field") {
+    const field = target.dataset.field;
+    if (field) {
+      startPatientFieldEdit(id, field);
+    }
+  }
+
+  if (action === "save-patient-field") {
+    savePatientField(id);
+    return;
+  }
+
+  if (action === "cancel-patient-field") {
+    state.activePatientField = null;
+    state.patientFieldDraft = "";
   }
 
   if (action === "move-patient-up") {
@@ -1237,41 +1218,15 @@ document.addEventListener("click", async (event) => {
     return;
   }
 
-  if (action === "edit-inline-status") {
-    startInlineStatusEdit(id);
-  }
-
-  if (action === "save-inline-status") {
-    saveInlineStatus(id);
-    return;
-  }
-
-  if (action === "cancel-inline-status") {
-    state.inlineStatusPatientId = null;
-    state.inlineStatusDraft = "";
-  }
-
   if (action === "new-task-for-patient") {
-    const patient = state.patients.find((entry) => entry.id === id);
-    if (patient) {
-      openTaskFormForPatient(patient.name);
-      saveAndRender();
-      taskTitleInput.focus();
-      return;
-    }
+    startInlinePatientTask(id);
+    render();
+    return;
   }
 
   if (action === "jump-patient") {
     state.selectedPatientId = id;
     state.currentView = "patients";
-  }
-
-  if (action === "edit-task") {
-    startEditingTask(id);
-  }
-
-  if (action === "delete-task") {
-    state.tasks = state.tasks.filter((task) => task.id !== id);
   }
 
   if (action === "toggle-task") {
@@ -1314,18 +1269,6 @@ document.addEventListener("click", async (event) => {
     }
   }
 
-  if (action === "remove-draft-lab") {
-    state.draftLabs = state.draftLabs.filter((_, index) => String(index) !== id);
-  }
-
-  if (action === "remove-draft-exam") {
-    state.draftExams = state.draftExams.filter((_, index) => String(index) !== id);
-  }
-
-  if (action === "remove-draft-history") {
-    state.draftHistory = state.draftHistory.filter((_, index) => String(index) !== id);
-  }
-
   if (action === "copy-patient") {
     const patient = state.patients.find((entry) => entry.id === id);
 
@@ -1360,8 +1303,12 @@ document.addEventListener("input", (event) => {
     return;
   }
 
-  if (target.matches("[data-inline-status-input]")) {
-    state.inlineStatusDraft = target.value;
+  if (target.matches("[data-inline-patient-input]")) {
+    state.patientFieldDraft = target.value;
+  }
+
+  if (target.matches("[data-inline-task-input]")) {
+    state.inlineTaskDraft = target.value;
   }
 });
 
@@ -1373,13 +1320,23 @@ document.addEventListener("keydown", (event) => {
   }
 
   if (
-    target.matches("[data-inline-status-input]") &&
-    event.key === "Enter" &&
-    (event.metaKey || event.ctrlKey)
+    target.matches("[data-inline-patient-input]") &&
+    event.key === "Enter"
   ) {
     event.preventDefault();
-    if (state.inlineStatusPatientId) {
-      saveInlineStatus(state.inlineStatusPatientId);
+    if (state.editingPatientId && state.activePatientField) {
+      if (patientFieldOrder.includes(state.activePatientField)) {
+        savePatientFieldAndAdvance(state.editingPatientId);
+      } else {
+        savePatientField(state.editingPatientId);
+      }
+    }
+  }
+
+  if (target.matches("[data-inline-task-input]") && event.key === "Enter") {
+    event.preventDefault();
+    if (state.inlineTaskPatientId) {
+      saveInlinePatientTask(state.inlineTaskPatientId);
     }
   }
 });

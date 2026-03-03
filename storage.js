@@ -34,6 +34,7 @@ function getConfig() {
 
 function isSupabaseReady() {
   return Boolean(
+    getConfig().SYNC_ENABLED !== false &&
     window.supabase &&
       getConfig().SUPABASE_URL &&
       getConfig().SUPABASE_ANON_KEY,
@@ -65,7 +66,7 @@ window.appStorage = {
     const client = createSupabaseClient();
 
     if (!client) {
-      emitStorageStatus("local");
+      emitStorageStatus(getConfig().SYNC_ENABLED === false ? "paused" : "local");
       return localState;
     }
 
@@ -101,7 +102,7 @@ window.appStorage = {
     const client = createSupabaseClient();
 
     if (!client) {
-      emitStorageStatus("local");
+      emitStorageStatus(getConfig().SYNC_ENABLED === false ? "paused" : "local");
       return;
     }
 
