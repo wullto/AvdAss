@@ -799,24 +799,13 @@ function isSectionCollapsed(patientId, section) {
 }
 
 function renderSectionBlock(patientId, label, section, content) {
-  const collapsed = isSectionCollapsed(patientId, section);
-
   return `
     <div class="detail-section">
       <div class="detail-heading-row">
         <p class="item-copy detail-heading"><strong>${label}:</strong></p>
-        <button
-          class="chip-button section-toggle-button"
-          data-action="toggle-patient-section"
-          data-id="${patientId}"
-          data-section="${section}"
-          type="button"
-        >
-          ${collapsed ? "Visa" : "Dolj"}
-        </button>
       </div>
-      <div class="${collapsed ? "detail-section-collapsed" : "detail-section-content"}">
-        ${collapsed ? '<p class="item-copy item-copy-secondary">Doljd sektion</p>' : content}
+      <div class="detail-section-content">
+        ${content}
       </div>
     </div>
   `;
@@ -926,6 +915,7 @@ function renderPatients() {
         : patientTasks.length === 1
           ? patientTasks[0].title
           : `${patientTasks.length} uppgifter`;
+    const isEditingPatient = state.editingPatientId === patient.id;
     const isEditingStatus = state.inlineStatusPatientId === patient.id;
     const statusMarkup = isEditingStatus
       ? `
@@ -937,7 +927,7 @@ function renderPatients() {
           </div>
         </div>
       `
-      : `<p class="item-copy item-copy-a"><strong>A:</strong> ${patient.status || "Ej ifyllt"}</p>`;
+      : `<p class="item-copy item-copy-a">${patient.status || "Ej ifyllt"}</p>`;
     card.className = `item-card patient-card ${isOpen ? "active" : ""} ${highlightedPatientId === patient.id ? "item-card-highlight" : ""}`;
     card.dataset.patientId = patient.id;
     card.innerHTML = `
@@ -948,7 +938,7 @@ function renderPatients() {
         <span class="patient-avatar" aria-hidden="true">${patient.avatar || "🧑"}</span>
         <h3 class="item-title">${patient.name}</h3>
       </div>
-      <div class="detail-section summary-section compact-summary">
+      <div class="detail-section summary-section compact-summary ${isOpen ? "collapsed" : ""}">
         <p class="item-copy"><strong>S:</strong> ${patient.reason || "Ej ifyllt"}</p>
       </div>
       <div class="detail-grid ${isOpen ? "expanded" : "collapsed"}">
@@ -978,28 +968,34 @@ function renderPatients() {
         ${renderSectionBlock(patient.id, "R", "tasks", tasksMarkup)}
       </div>
       <div class="item-actions detail-actions ${isOpen ? "" : "hidden-actions"}">
-        <button
-          class="chip-button"
-          data-action="move-patient-up"
-          data-id="${patient.id}"
-          type="button"
-          ${patientIndex === 0 ? "disabled" : ""}
-        >
-          Flytta upp
-        </button>
-        <button
-          class="chip-button"
-          data-action="move-patient-down"
-          data-id="${patient.id}"
-          type="button"
-          ${patientIndex === state.patients.length - 1 ? "disabled" : ""}
-        >
-          Flytta ned
-        </button>
-        <button class="chip-button" data-action="new-task-for-patient" data-id="${patient.id}" type="button">Ny uppgift</button>
+        ${
+          isEditingPatient
+            ? `
+              <button
+                class="chip-button"
+                data-action="move-patient-up"
+                data-id="${patient.id}"
+                type="button"
+                ${patientIndex === 0 ? "disabled" : ""}
+              >
+                Flytta upp
+              </button>
+              <button
+                class="chip-button"
+                data-action="move-patient-down"
+                data-id="${patient.id}"
+                type="button"
+                ${patientIndex === state.patients.length - 1 ? "disabled" : ""}
+              >
+                Flytta ned
+              </button>
+              <button class="chip-button" data-action="new-task-for-patient" data-id="${patient.id}" type="button">Ny uppgift</button>
+              <button class="chip-button" data-action="copy-patient" data-id="${patient.id}" type="button">Kopiera sammanfattning</button>
+              <button class="chip-button" data-action="delete-patient" data-id="${patient.id}" type="button">Ta bort</button>
+            `
+            : ""
+        }
         <button class="chip-button" data-action="edit-patient" data-id="${patient.id}" type="button">Redigera</button>
-        <button class="chip-button" data-action="copy-patient" data-id="${patient.id}" type="button">Kopiera sammanfattning</button>
-        <button class="chip-button" data-action="delete-patient" data-id="${patient.id}" type="button">Ta bort</button>
       </div>
     `;
     patientList.appendChild(card);

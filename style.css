@@ -494,6 +494,10 @@ textarea {
   gap: 6px;
 }
 
+.compact-summary.collapsed {
+  display: none;
+}
+
 .detail-grid.collapsed {
   display: none;
 }
