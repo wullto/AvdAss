@@ -214,7 +214,6 @@ const demoState = {
   isNavOpen: false,
   isPatientFormOpen: false,
   isTaskFormOpen: false,
-  syncStatus: "local",
   selectedTaskId: null,
   editingTaskId: null,
   taskFilters: {
@@ -231,7 +230,6 @@ const initialState = {
   isPatientFormOpen: false,
   isTaskFormOpen: false,
   collapsedSections: {},
-  syncStatus: "local",
   selectedTaskId: null,
   editingPatientId: null,
   editingTaskId: null,
@@ -265,7 +263,6 @@ const toggleNavButton = document.querySelector("#toggle-nav-button");
 const navTabs = Array.from(document.querySelectorAll("[data-view-tab]"));
 const views = Array.from(document.querySelectorAll("[data-view]"));
 const todayDate = document.querySelector("#today-date");
-const syncStatus = document.querySelector("#sync-status");
 const completedNavCount = document.querySelector("#completed-nav-count");
 const clearCompletedButton = document.querySelector("#clear-completed-button");
 const historyInput = document.querySelector("#history-input");
@@ -482,7 +479,6 @@ function saveAndRender() {
 
 function render() {
   renderTodayDate();
-  renderSyncStatus();
   renderNavCounts();
   renderNavigation();
   renderViewFocus();
@@ -561,24 +557,6 @@ function flushPendingScroll() {
 
     targetInput?.focus();
   });
-}
-
-function renderSyncStatus() {
-  if (!syncStatus) {
-    return;
-  }
-
-  const status = state.syncStatus || "local";
-  const labels = {
-    local: "Lokal lagring",
-    paused: "Sync pausad",
-    syncing: "Synkar...",
-    synced: "Synkad",
-    error: "Syncfel",
-  };
-
-  syncStatus.textContent = labels[status] || labels.local;
-  syncStatus.className = `sync-status sync-status-${status}`;
 }
 
 function renderNavCounts() {
@@ -1341,21 +1319,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-window.addEventListener("app-storage-status", (event) => {
-  const nextStatus = event.detail?.status;
-
-  if (!nextStatus) {
-    return;
-  }
-
-  state.syncStatus = nextStatus;
-  renderSyncStatus();
-});
-
 async function initializeApp() {
-  state.syncStatus = window.appStorage?.getStatus
-    ? window.appStorage.getStatus()
-    : "local";
   const loadedState = await (window.appStorage?.loadState
     ? window.appStorage.loadState()
     : Promise.resolve(null));
