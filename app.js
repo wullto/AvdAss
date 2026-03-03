@@ -940,6 +940,7 @@ function renderPatients() {
       </div>
       <div class="detail-section summary-section compact-summary ${isOpen ? "collapsed" : ""}">
         <p class="item-copy"><strong>S:</strong> ${patient.reason || "Ej ifyllt"}</p>
+        <p class="item-copy"><strong>A:</strong> ${patient.status || "Ej ifyllt"}</p>
       </div>
       <div class="detail-grid ${isOpen ? "expanded" : "collapsed"}">
         <div class="detail-section detail-section-inline detail-section-no-border">
