@@ -26,6 +26,10 @@ body {
     linear-gradient(180deg, #f8f9fb 0%, var(--bg) 100%);
 }
 
+body.app-locked {
+  overflow: hidden;
+}
+
 button,
 input,
 select,
@@ -37,6 +41,55 @@ textarea {
   width: min(1180px, calc(100vw - 24px));
   margin: 0 auto;
   padding: 12px 0 32px;
+}
+
+body.app-locked .app-shell {
+  visibility: hidden;
+}
+
+.auth-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background:
+    radial-gradient(circle at top left, rgba(49, 95, 125, 0.08), transparent 30%),
+    rgba(248, 249, 251, 0.96);
+}
+
+.auth-gate[hidden] {
+  display: none;
+}
+
+.auth-card {
+  display: grid;
+  gap: 16px;
+  width: min(420px, 100%);
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(31, 37, 43, 0.08);
+}
+
+.auth-card label {
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.auth-card input {
+  width: 100%;
+}
+
+.auth-error {
+  margin: -4px 0 0;
+  color: #b33434;
+  font-size: 0.92rem;
+  font-weight: 600;
 }
 
 .hero,

@@ -12,7 +12,26 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body class="app-locked">
+    <div id="auth-gate" class="auth-gate">
+      <form id="auth-form" class="auth-card">
+        <p class="section-kicker">Skyddad vy</p>
+        <h2>Losenord</h2>
+        <label>
+          Ange losenord
+          <input
+            id="auth-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+          />
+        </label>
+        <p id="auth-error" class="auth-error" hidden>Fel losenord</p>
+        <button type="submit" class="primary-button">Oppna appen</button>
+      </form>
+    </div>
+
     <div class="app-shell">
       <header class="hero">
         <div class="hero-row">

@@ -222,6 +222,9 @@ const demoState = {
   },
 };
 
+const APP_PASSWORD = "ollewullt";
+const AUTH_STORAGE_KEY = "avdelningsassistent-authenticated";
+
 const initialState = {
   patients: [],
   tasks: [],
@@ -275,6 +278,10 @@ const cancelEditButton = document.querySelector("#cancel-edit-button");
 const patientFormTitle = document.querySelector("#patient-form-title");
 const savePatientButton = document.querySelector("#save-patient-button");
 const floatingActionButton = document.querySelector("#floating-action-button");
+const authGate = document.querySelector("#auth-gate");
+const authForm = document.querySelector("#auth-form");
+const authPasswordInput = document.querySelector("#auth-password");
+const authError = document.querySelector("#auth-error");
 
 patientForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -427,6 +434,24 @@ clearCompletedButton?.addEventListener("click", () => {
   saveAndRender();
 });
 
+authForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const submittedPassword = authPasswordInput?.value.trim() || "";
+
+  if (submittedPassword !== APP_PASSWORD) {
+    if (authError) {
+      authError.hidden = false;
+    }
+    authPasswordInput?.focus();
+    authPasswordInput?.select();
+    return;
+  }
+
+  sessionStorage.setItem(AUTH_STORAGE_KEY, "true");
+  unlockApp();
+});
+
 function normalizeState(parsed) {
   if (!parsed) {
     return structuredClone(initialState);
@@ -473,6 +498,37 @@ function persistState() {
   return window.appStorage?.saveState
     ? window.appStorage.saveState(state)
     : Promise.resolve();
+}
+
+function isAuthenticated() {
+  return sessionStorage.getItem(AUTH_STORAGE_KEY) === "true";
+}
+
+function lockApp() {
+  document.body.classList.add("app-locked");
+  if (authGate) {
+    authGate.hidden = false;
+  }
+  if (authError) {
+    authError.hidden = true;
+  }
+  requestAnimationFrame(() => {
+    authPasswordInput?.focus();
+  });
+}
+
+function unlockApp() {
+  document.body.classList.remove("app-locked");
+  if (authGate) {
+    authGate.hidden = true;
+  }
+  if (authError) {
+    authError.hidden = true;
+  }
+  if (authForm instanceof HTMLFormElement) {
+    authForm.reset();
+  }
+  void initializeApp();
 }
 
 function saveAndRender() {
@@ -1363,4 +1419,8 @@ window.addEventListener("app-storage-status", (event) => {
   renderSyncStatus();
 });
 
-void initializeApp();
+if (isAuthenticated()) {
+  unlockApp();
+} else {
+  lockApp();
+}
