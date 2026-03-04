@@ -104,6 +104,45 @@ h3 {
   text-transform: capitalize;
 }
 
+.sync-status {
+  margin: 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.sync-status-local {
+  color: #6a7580;
+}
+
+.sync-status-paused {
+  color: #7b5a14;
+  background: #fff8e8;
+  border-color: #eedca8;
+}
+
+.sync-status-syncing {
+  color: #315f7d;
+  background: #edf3f7;
+  border-color: #d8e4ec;
+}
+
+.sync-status-synced {
+  color: #2f6b45;
+  background: #eef8f0;
+  border-color: #d6e9dc;
+}
+
+.sync-status-error {
+  color: #b33434;
+  background: #fff1f1;
+  border-color: #f0d2d2;
+}
+
 .top-nav {
   display: flex;
   gap: 10px;
